@@ -1,0 +1,80 @@
+\hypertarget{classWallet}{}\doxysection{Wallet Class Reference}
+\label{classWallet}\index{Wallet@{Wallet}}
+
+
+H\+D\+Wallet class, destined to handle the creation and storage of keys.  
+
+
+
+
+{\ttfamily \#include $<$wallet.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classWallet_a64f8cc9a87ab824142473feca8adaf6c}\label{classWallet_a64f8cc9a87ab824142473feca8adaf6c}} 
+\mbox{\hyperlink{classKey}{Key}} \mbox{\hyperlink{classWallet_a64f8cc9a87ab824142473feca8adaf6c}{get\+Key}} ()
+\begin{DoxyCompactList}\small\item\em Returns a \mbox{\hyperlink{classKey}{Key}} object created either from the seed or recovered from the disk ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classWallet_a9ceadc3e0fa7565384ee1dea2c96935e}\label{classWallet_a9ceadc3e0fa7565384ee1dea2c96935e}} 
+int \mbox{\hyperlink{classWallet_a9ceadc3e0fa7565384ee1dea2c96935e}{read\+Key}} (byte $\ast$$\ast$private\+\_\+key)
+\begin{DoxyCompactList}\small\item\em Tries to read the key from the disk (32 bytes) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a707924fdfd72871734c26161495ae417}\label{classWallet_a707924fdfd72871734c26161495ae417}} 
+int \mbox{\hyperlink{classWallet_a707924fdfd72871734c26161495ae417}{receive\+Seed}} (byte $\ast$$\ast$seed)
+\begin{DoxyCompactList}\small\item\em Tries to read the seed from the disk (64 bytes) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_ab185ac11e2ed36dc125a710e841c2294}{generate\+Seed}} (byte $\ast$$\ast$seed)
+\begin{DoxyCompactList}\small\item\em Create a seed (64 bytes) from a pseudo-\/random cryptographic safe entropy source provided by the system. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_af0486ffe924c68a0af18bc3bf3ee7d29}\label{classWallet_af0486ffe924c68a0af18bc3bf3ee7d29}} 
+int \mbox{\hyperlink{classWallet_af0486ffe924c68a0af18bc3bf3ee7d29}{get\+Public\+Key}} (byte $\ast$$\ast$public\+\_\+key)
+\begin{DoxyCompactList}\small\item\em Generates the public key(33 bytes in the compressed form) from an existing private key. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a01793c3a139d62607e8d7bfcaf4c1249}\label{classWallet_a01793c3a139d62607e8d7bfcaf4c1249}} 
+void \mbox{\hyperlink{classWallet_a01793c3a139d62607e8d7bfcaf4c1249}{uint2uchar32}} (byte $\ast$$\ast$retorno, unsigned int)
+\begin{DoxyCompactList}\small\item\em Converts an uint to the equivalent bytes of byte data. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a3c53c3fabdc958baf9b4282b1742a074}\label{classWallet_a3c53c3fabdc958baf9b4282b1742a074}} 
+int \mbox{\hyperlink{classWallet_a3c53c3fabdc958baf9b4282b1742a074}{create\+Key}} (byte $\ast$$\ast$destination)
+\begin{DoxyCompactList}\small\item\em Creates a new key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classWallet_af9b41deb331b9ac9fb4048ea6a5e0a3a}\label{classWallet_af9b41deb331b9ac9fb4048ea6a5e0a3a}} 
+byte \mbox{\hyperlink{classWallet_af9b41deb331b9ac9fb4048ea6a5e0a3a}{chaincode}} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Dataset destined to the creation of new child keys. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a9fe0abdf536940d99aa0b1e593164c6a}\label{classWallet_a9fe0abdf536940d99aa0b1e593164c6a}} 
+int \mbox{\hyperlink{classWallet_a9fe0abdf536940d99aa0b1e593164c6a}{key\+\_\+index}}
+\begin{DoxyCompactList}\small\item\em Index of the child key. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_ac529ebfe89497b97a9fcf8c4388791d0}\label{classWallet_ac529ebfe89497b97a9fcf8c4388791d0}} 
+byte \mbox{\hyperlink{classWallet_ac529ebfe89497b97a9fcf8c4388791d0}{private\+\_\+key\+\_\+level\+\_\+0}} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Initial Private key derived from the Seed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a217200ae169cdbf3e43f58f972458b4a}\label{classWallet_a217200ae169cdbf3e43f58f972458b4a}} 
+byte \mbox{\hyperlink{classWallet_a217200ae169cdbf3e43f58f972458b4a}{public\+\_\+key\+\_\+level\+\_\+0}} \mbox{[}33\mbox{]}
+\begin{DoxyCompactList}\small\item\em Initial Public key derived from the Seed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a2756d7521cd25267e071b72ab0cbbb66}\label{classWallet_a2756d7521cd25267e071b72ab0cbbb66}} 
+byte \mbox{\hyperlink{classWallet_a2756d7521cd25267e071b72ab0cbbb66}{chaincode\+\_\+level\+\_\+0}} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Initial Public key derived from the Seed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+H\+D\+Wallet class, destined to handle the creation and storage of keys. 
+
+The \mbox{\hyperlink{classWallet}{Wallet}} class implements a H\+D\+Wallet according to Bitcoin implementation model. A cryptographic secure random number and a salt are used for the deterministic creation of milions of child private and public keys. For more information about this specific type of wallet, refer to the Bitcoin Documentation or O\textquotesingle{}Reily\textquotesingle{}s \char`\"{}\+Mastering Bitcoin\char`\"{} book. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classWallet_ab185ac11e2ed36dc125a710e841c2294}\label{classWallet_ab185ac11e2ed36dc125a710e841c2294}} 
+\index{Wallet@{Wallet}!generateSeed@{generateSeed}}
+\index{generateSeed@{generateSeed}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{generateSeed()}{generateSeed()}}
+{\footnotesize\ttfamily int Wallet\+::generate\+Seed (\begin{DoxyParamCaption}\item[{byte $\ast$$\ast$}]{seed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Create a seed (64 bytes) from a pseudo-\/random cryptographic safe entropy source provided by the system. 
+
+This function uses the /dev/urandom linux/unix file to obtain pseudo-\/random data generated by the O.\+S. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/wilton/alvorada/include/wallet.\+hpp\item 
+/home/wilton/alvorada/src/wallet.\+cpp\end{DoxyCompactItemize}
