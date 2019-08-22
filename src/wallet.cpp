@@ -4,13 +4,16 @@
 
 typedef unsigned char byte;
 
+Wallet::Wallet(){}
+Wallet::~Wallet(){}
+
 void Wallet::uint2uchar32(byte* retorno, unsigned int valor){
    for(int i = 0; i < 4; i++){
       retorno[3 - i] = valor>>(i*8); 
    }
 }
 
-int Wallet::recoverKey(byte** private_key){
+int Wallet::recoverPrivateKey(BIGNUM* private_key){
     return false;
 }
 
@@ -54,19 +57,12 @@ int Wallet::generateSeed(byte** seed){
     return true;
 }
 
-int Wallet::generatePublicKey(BIGNUM* private_key, BIGNUM* public_key){
-    EC_GROUP *curve;
-    EC_POINT *public_key_point;
-    public_key = BN_new();
-
-    BN_CTX *context = BN_CTX_new();
-
+int Wallet::generatePublicKey(BIGNUM* private_key, EC_POINT *public_key){
     if((curve = EC_GROUP_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();    
 
-    public_key_point = EC_POINT_new(curve);
+    public_key = EC_POINT_new(curve);
 
-    if(EC_POINT_mul(curve, public_key_point, private_key, NULL, NULL, context) != 1) ERR_get_error();
-    EC_POINT_point2bn(curve, public_key_point, POINT_CONVERSION_COMPRESSED, public_key, context);
+    if(EC_POINT_mul(curve, public_key, private_key, NULL, NULL, context) != 1) ERR_get_error();
 
     return true;
 }
@@ -93,7 +89,11 @@ int Wallet::generatePrivateKey(BIGNUM* destination, unsigned int key_index){
     byte *composed_seed = new byte[69];
     byte hashed_seed[64];
 
-    BN_bn2bin(const_cast<const BIGNUM*>(generator_public_key), composed_seed);
+    BIGNUM *tmp_pub_key = BN_new();
+
+    EC_POINT_point2bn(curve, generator_public_key, POINT_CONVERSION_COMPRESSED, tmp_pub_key, context);
+
+    BN_bn2bin(const_cast<const BIGNUM*>(tmp_pub_key), composed_seed);
     BN_bn2bin(const_cast<const BIGNUM*>(generator_chaincode), composed_seed + 33);
     uint2uchar32(composed_seed + 65, key_index);
 
@@ -106,22 +106,25 @@ int Wallet::generatePrivateKey(BIGNUM* destination, unsigned int key_index){
     return true;
 }
 
-Key* Wallet::getKey(){
-    EC_KEY *ec_key = nullptr;
-    // Key *key = nullptr;
+Key* Wallet::getKey(unsigned int key_index = 0){
     BIGNUM *private_key = nullptr;
-    BIGNUM *public_key = nullptr;
+    EC_POINT *public_key = nullptr;
+    
+    EC_KEY *ec_key = nullptr;
+    Key *key = nullptr;
+
+    context = BN_CTX_new();
 
     if ((ec_key = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();
-    generatePrivateKey(private_key, key_index);
+    if(!recoverPrivateKey(private_key) or key_index > 0) generatePrivateKey(private_key, key_index);
     generatePublicKey(private_key, public_key);
 
-    // if (EC_KEY_set_private_key(chave, BN_chave_privada) != 1)    ERR_get_error();
-    // if (EC_KEY_set_public_key(chave, EC_POINT_chave_publica) != 1)   ERR_get_error();
+    if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
+    if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
 
-    // key = new Key();
-    // key->setKeyPair(ec_key);
-    // key->setKeyIndex(key_index);
+    key = new Key();
+    key->setKeyPair(ec_key);
+    key->setKeyIndex(key_index);
 
-    return nullptr;
+    return key;
 }

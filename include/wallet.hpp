@@ -21,18 +21,22 @@ class Wallet{
         //! Initial Private key derived from the Seed
         BIGNUM *generator_private_key;
         //! Initial Public key derived from the Seed
-        BIGNUM *generator_public_key;
+        EC_POINT *generator_public_key;
         //! Initial Public key derived from the Seed
         BIGNUM *generator_chaincode;
+        //!BIGNUM context to hold temporary variables useful for the lib
+        BN_CTX *context;
+        //!Curve used in the EC multiplication
+        EC_GROUP *curve;
     
         //! Tries to read the 32 bytes key from the disk
-        int recoverKey(byte** private_key);
+        int recoverPrivateKey(BIGNUM* private_key);
         //! Tries to read the 64 bytes seed from the disk
         int receiveSeed(byte** seed);
         //! Create a 64 bytes seed from a pseudo-random cryptographic safe entropy source provided by the system
         int generateSeed(byte** seed);
         //! Generates the public key(33 bytes in the compressed form) from an existing private key
-        int generatePublicKey(BIGNUM* private_key, BIGNUM* public_key);
+        int generatePublicKey(BIGNUM *private_key, EC_POINT *public_key);
         //! Converts an uint to the equivalent bytes of unsigned char data
         void uint2uchar32(byte* retorno, unsigned int);
         //! Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed
@@ -45,7 +49,7 @@ class Wallet{
         ~Wallet();       
         
         //!Returns a Key object created either from the seed or recovered from the disk        
-        Key* getKey();        
+        Key* getKey(unsigned int key_index);        
 };
 
 #endif
