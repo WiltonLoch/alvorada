@@ -17,7 +17,7 @@ class Wallet{
         //! Dataset destined to the creation of new child keys
         // byte chaincode[32];
         //! Index of the child key
-        int key_index;
+        unsigned int key_index;
         //! Initial Private key derived from the Seed
         BIGNUM *generator_private_key;
         //! Initial Public key derived from the Seed
@@ -34,11 +34,11 @@ class Wallet{
         //! Generates the public key(33 bytes in the compressed form) from an existing private key
         int generatePublicKey(BIGNUM* private_key, BIGNUM* public_key);
         //! Converts an uint to the equivalent bytes of unsigned char data
-        void uint2uchar32(byte** retorno, unsigned int);
+        void uint2uchar32(byte* retorno, unsigned int);
         //! Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed
         int initializeGenerators();
-        //! Creates a new key
-        int generatePrivateKey(byte** destination);
+        //! Creates a new private key
+        int generatePrivateKey(BIGNUM* destination, unsigned int key_index);
 
     public:
         Wallet();

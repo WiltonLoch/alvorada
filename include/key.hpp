@@ -11,9 +11,9 @@
 
 class Key{
     private:
-        BIGNUM *private_key;
-        EC_POINT *public_key;
-        unsigned char* endereco;
+        EC_KEY* key_pair;
+        unsigned int key_index;
+        unsigned char* address;
 
         //!Cria um endereço (padrão Bitcoin) através da chave pública
         unsigned char* criarEndereco();
@@ -30,6 +30,12 @@ class Key{
 
         //!Escreve a chave privada na saída padrão
         void printPrivateKey();
+
+        //!Set the key index for possible further generation reference
+        void setKeyIndex(unsigned int key_index);
+        
+        //!Set the key pair used for the signatures
+        void setKeyPair(EC_KEY *key_pair);
 
         //!Assina um conjunto de dados com a chave privada
         void assinar();
