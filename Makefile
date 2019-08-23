@@ -1,4 +1,3 @@
-
 TARGET = alvorada
 
 SRC_DIR = src

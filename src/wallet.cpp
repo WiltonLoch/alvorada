@@ -1,5 +1,7 @@
 #include <wallet.hpp>
 #include <fstream>
+#include <iostream>
+#include <bitset>
 #include <openssl/sha.h>
 
 typedef unsigned char byte;
@@ -13,26 +15,52 @@ void Wallet::uint2uchar32(byte* retorno, unsigned int valor){
    }
 }
 
-int Wallet::recoverPrivateKey(BIGNUM* private_key){
-    return false;
+int Wallet::recoverPrivateKey(BIGNUM **private_key, unsigned int *key_index){
+    byte raw_key[32] = {0};
+
+    std::fstream key_store_file;
+    key_store_file.open("key", std::fstream::in | std::fstream::binary);
+    if(!key_store_file) return false;
+
+    for(int i = 0; i < 32; i++){
+        key_store_file >> raw_key[i];
+    }
+
+    std::bitset<256> bitteste (raw_key[0]);
+    for(int i = 1; i < 32; i++){
+        bitteste = bitteste<<8;    
+        bitteste |= raw_key[i];
+    }
+    std::cout << "priv_recovered:\n" << bitteste.to_string() << std::endl;
+
+    key_store_file >> *key_index;
+
+    // printf("%d", *key_index);
+
+    *private_key = BN_new();
+
+    BN_bin2bn(const_cast<const unsigned char*>(raw_key), 32, *private_key);
+
+    return true;
 }
 
 int Wallet::receiveSeed(byte** seed){
     std::fstream seed_file;
-    seed_file.open("seed", std::fstream::in | std::fstream::out);
+    printf("aaaa\n");
+    seed_file.open("seed", std::fstream::in);
     if(!seed_file){
-        seed_file.open("seed", std::fstream::in | std::fstream::out | std::fstream::trunc);
+        seed_file.open("seed", std::fstream::out | std::fstream::trunc);
         if(!generateSeed(seed)) return false;
-        for (size_t i = 0; i < sizeof(seed); i++){
-            seed_file << seed[i];
+
+        for (size_t i = 0; i < 32; i++){
+            seed_file << (*seed)[i];
         }
     }else{
-        for (size_t i = 0; i < sizeof(seed); i++){
-            seed_file >> seed[i];
+        for (size_t i = 0; i < 32; i++){
+            seed_file >> (*seed)[i];
         }
-        return true;
     }      
-    return false;
+    return true;
 }
 
 /**
@@ -47,7 +75,7 @@ int Wallet::generateSeed(byte** seed){
         return false;
     }
 
-    return_code = RAND_bytes(*seed, sizeof(seed));
+    return_code = RAND_bytes(*seed, 32);
     error = ERR_get_error();
     if (return_code != 1)
     {
@@ -57,16 +85,33 @@ int Wallet::generateSeed(byte** seed){
     return true;
 }
 
-int Wallet::generatePublicKey(BIGNUM* private_key, EC_POINT *public_key){
-    if((curve = EC_GROUP_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();    
+/**
+* The first argument is a pointer to a initialized existing private_key and the second is a pointer to a
+* return pointer where the public_key is supposed to be stored. The function executes an EC multiplication
+* in order to create a public key from an already created private key. In te same way that Bitcoin does,
+* the signature algorithm uses the secp256k1 curve.
+*/
+int Wallet::generatePublicKey(BIGNUM* private_key, EC_POINT **public_key){
+    unsigned long error;
 
-    public_key = EC_POINT_new(curve);
+    if((curve = EC_GROUP_new_by_curve_name(NID_secp256k1)) == NULL){
+        error = ERR_get_error();    
+        printf("Error creating the Eliptic curve = 0x%lx\n", error);
+    } 
 
-    if(EC_POINT_mul(curve, public_key, private_key, NULL, NULL, context) != 1) ERR_get_error();
+    *public_key = EC_POINT_new(curve);
+
+    if(EC_POINT_mul(curve, *public_key, private_key, NULL, NULL, context) != 1){
+        error = ERR_get_error();
+        printf("Error creating the public key = 0x%lx\n", error);
+    } 
 
     return true;
 }
 
+/**
+* 
+*/
 int Wallet::initializeGenerators(){
     byte hashed_seed[64];
     byte *seed = new unsigned char[32];
@@ -75,22 +120,23 @@ int Wallet::initializeGenerators(){
     SHA512(seed, sizeof(seed), hashed_seed);
 
     generator_private_key = BN_new();
-    generator_chaincode = BN_new();
+    generator_chaincode = BN_new();    
 
-    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed), 32, generator_private_key);
-    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed + 32), 32, generator_chaincode);    
+    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed), 32, generator_private_key);    
 
-    if(!generatePublicKey(generator_private_key, generator_public_key)) return false;
+    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed + 32), 32, generator_chaincode); 
+
+    if(!generatePublicKey(generator_private_key, &generator_public_key)) return false;
 
     return true;
 }
 
-int Wallet::generatePrivateKey(BIGNUM* destination, unsigned int key_index){
+int Wallet::generatePrivateKey(BIGNUM **destination, unsigned int key_index){
     byte *composed_seed = new byte[69];
     byte hashed_seed[64];
+    std::fstream key_store_file("key", std::fstream::out | std::fstream::trunc);
 
     BIGNUM *tmp_pub_key = BN_new();
-
     EC_POINT_point2bn(curve, generator_public_key, POINT_CONVERSION_COMPRESSED, tmp_pub_key, context);
 
     BN_bn2bin(const_cast<const BIGNUM*>(tmp_pub_key), composed_seed);
@@ -99,14 +145,27 @@ int Wallet::generatePrivateKey(BIGNUM* destination, unsigned int key_index){
 
     SHA512(composed_seed, sizeof(composed_seed), hashed_seed);
 
-    destination = BN_new();
+    for(int i = 0; i < 32; i++){
+        key_store_file << hashed_seed[i];
+    }
 
-    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed), 32, destination);
+    std::bitset<256> bitteste (hashed_seed[0]);
+    for(int i = 1; i < 32; i++){
+        bitteste = bitteste<<8;    
+        bitteste |= hashed_seed[i];
+    }
+    std::cout << "priv_stored:\n" << bitteste.to_string() << std::endl;
+
+    key_store_file << key_index;
+
+    *destination = BN_new();
+
+    BN_bin2bn(const_cast<const unsigned char*>(hashed_seed), 32, *destination);
 
     return true;
 }
 
-Key* Wallet::getKey(unsigned int key_index = 0){
+Key* Wallet::getKey(unsigned int key_index){
     BIGNUM *private_key = nullptr;
     EC_POINT *public_key = nullptr;
     
@@ -114,17 +173,23 @@ Key* Wallet::getKey(unsigned int key_index = 0){
     Key *key = nullptr;
 
     context = BN_CTX_new();
+    if ((ec_key = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();    
 
-    if ((ec_key = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();
-    if(!recoverPrivateKey(private_key) or key_index > 0) generatePrivateKey(private_key, key_index);
-    generatePublicKey(private_key, public_key);
+    if(!recoverPrivateKey(&private_key, &key_index) or key_index > 0){
+        if(!initializeGenerators()) printf("Error on generators initialization!\n");
+        generatePrivateKey(&private_key, key_index);
+    }
+    generatePublicKey(private_key, &public_key);
+    printf("priv: %s\n", BN_bn2hex(const_cast<const BIGNUM*>(private_key)));
+    printf("pub: %s\n", EC_POINT_point2hex(curve, public_key, POINT_CONVERSION_COMPRESSED, context));
 
-    if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
-    if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
+    // if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
+    // if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
 
-    key = new Key();
-    key->setKeyPair(ec_key);
-    key->setKeyIndex(key_index);
+    // key = new Key();
+    // key->setKeyPair(ec_key);
+    // key->setKeyIndex(key_index);
 
-    return key;
+    // return key;
+    return nullptr;
 }
