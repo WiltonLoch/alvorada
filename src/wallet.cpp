@@ -15,38 +15,19 @@ void Wallet::uint2uchar32(byte* retorno, unsigned int valor){
    }
 }
 
-int Wallet::recoverPrivateKey(BIGNUM **private_key, unsigned int *key_index){
+int Wallet::recoverPrivateKeyIndex(unsigned int *key_index){
     byte raw_key[32] = {0};
 
-    std::fstream key_store_file;
-    key_store_file.open("key", std::fstream::in | std::fstream::binary);
+    std::fstream key_store_file("key", std::fstream::in);
     if(!key_store_file) return false;
 
-    for(int i = 0; i < 32; i++){
-        key_store_file >> raw_key[i];
-    }
-
-    std::bitset<256> bitteste (raw_key[0]);
-    for(int i = 1; i < 32; i++){
-        bitteste = bitteste<<8;    
-        bitteste |= raw_key[i];
-    }
-    std::cout << "priv_recovered:\n" << bitteste.to_string() << std::endl;
-
     key_store_file >> *key_index;
-
-    // printf("%d", *key_index);
-
-    *private_key = BN_new();
-
-    BN_bin2bn(const_cast<const unsigned char*>(raw_key), 32, *private_key);
 
     return true;
 }
 
 int Wallet::receiveSeed(byte** seed){
     std::fstream seed_file;
-    printf("aaaa\n");
     seed_file.open("seed", std::fstream::in);
     if(!seed_file){
         seed_file.open("seed", std::fstream::out | std::fstream::trunc);
@@ -143,18 +124,7 @@ int Wallet::generatePrivateKey(BIGNUM **destination, unsigned int key_index){
     BN_bn2bin(const_cast<const BIGNUM*>(generator_chaincode), composed_seed + 33);
     uint2uchar32(composed_seed + 65, key_index);
 
-    SHA512(composed_seed, sizeof(composed_seed), hashed_seed);
-
-    for(int i = 0; i < 32; i++){
-        key_store_file << hashed_seed[i];
-    }
-
-    std::bitset<256> bitteste (hashed_seed[0]);
-    for(int i = 1; i < 32; i++){
-        bitteste = bitteste<<8;    
-        bitteste |= hashed_seed[i];
-    }
-    std::cout << "priv_stored:\n" << bitteste.to_string() << std::endl;
+    SHA512(composed_seed, 69, hashed_seed);
 
     key_store_file << key_index;
 
@@ -165,6 +135,9 @@ int Wallet::generatePrivateKey(BIGNUM **destination, unsigned int key_index){
     return true;
 }
 
+/**
+* 
+*/
 Key* Wallet::getKey(unsigned int key_index){
     BIGNUM *private_key = nullptr;
     EC_POINT *public_key = nullptr;
@@ -175,21 +148,22 @@ Key* Wallet::getKey(unsigned int key_index){
     context = BN_CTX_new();
     if ((ec_key = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();    
 
-    if(!recoverPrivateKey(&private_key, &key_index) or key_index > 0){
-        if(!initializeGenerators()) printf("Error on generators initialization!\n");
-        generatePrivateKey(&private_key, key_index);
-    }
+    key_index == 0 ? recoverPrivateKeyIndex(&key_index) : key_index--;
+
+    if(!initializeGenerators()) printf("Error on generators initialization!\n");
+    generatePrivateKey(&private_key, key_index);
+    
     generatePublicKey(private_key, &public_key);
+    printf("key index: %d\n", key_index);
     printf("priv: %s\n", BN_bn2hex(const_cast<const BIGNUM*>(private_key)));
-    printf("pub: %s\n", EC_POINT_point2hex(curve, public_key, POINT_CONVERSION_COMPRESSED, context));
+    printf("pub: %s\n\n", EC_POINT_point2hex(curve, public_key, POINT_CONVERSION_COMPRESSED, context));
 
-    // if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
-    // if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
+    if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
+    if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
 
-    // key = new Key();
-    // key->setKeyPair(ec_key);
-    // key->setKeyIndex(key_index);
+    key = new Key();
+    key->setKeyPair(ec_key);
+    key->setKeyIndex(key_index);
 
-    // return key;
-    return nullptr;
+    return key;
 }

@@ -34,6 +34,9 @@ class Key{
         //!Set the key index for possible further generation reference
         void setKeyIndex(unsigned int key_index);
         
+        //!Set the key index for possible further generation reference
+        unsigned int getKeyIndex();
+        
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);
 

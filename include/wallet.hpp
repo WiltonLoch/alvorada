@@ -30,7 +30,7 @@ class Wallet{
         EC_GROUP *curve;
     
         //! Tries to read the 32 bytes key from the disk
-        int recoverPrivateKey(BIGNUM **private_key, unsigned int *key_index);
+        int recoverPrivateKeyIndex(unsigned int *key_index);
 
         //! Tries to read the 64 bytes seed from the disk
         int receiveSeed(byte** seed);
