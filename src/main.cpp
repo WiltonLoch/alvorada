@@ -7,7 +7,7 @@ using namespace std;
 
 int main(){
     Wallet *wallet = new Wallet();
-    Key *key = wallet->getKey();
+    Key *key = wallet->getKey(10);
     
 
     return 0;

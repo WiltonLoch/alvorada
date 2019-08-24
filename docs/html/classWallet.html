@@ -79,65 +79,141 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a64f8cc9a87ab824142473feca8adaf6c"><td class="memItemLeft" align="right" valign="top"><a id="a64f8cc9a87ab824142473feca8adaf6c"></a>
-<a class="el" href="classKey.html">Key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a64f8cc9a87ab824142473feca8adaf6c">getKey</a> ()</td></tr>
-<tr class="memdesc:a64f8cc9a87ab824142473feca8adaf6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="classKey.html">Key</a> object created either from the seed or recovered from the disk <br  />
- <br /></td></tr>
-<tr class="separator:a64f8cc9a87ab824142473feca8adaf6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c15cb69b495714527f14af8bcf1c90a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classKey.html">Key</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a0c15cb69b495714527f14af8bcf1c90a">getKey</a> (unsigned int key_index=0)</td></tr>
+<tr class="memdesc:a0c15cb69b495714527f14af8bcf1c90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="classKey.html">Key</a> object created either from the seed or recovered from the disk <br  />
+  <a href="classWallet.html#a0c15cb69b495714527f14af8bcf1c90a">More...</a><br /></td></tr>
+<tr class="separator:a0c15cb69b495714527f14af8bcf1c90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a9ceadc3e0fa7565384ee1dea2c96935e"><td class="memItemLeft" align="right" valign="top"><a id="a9ceadc3e0fa7565384ee1dea2c96935e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a9ceadc3e0fa7565384ee1dea2c96935e">readKey</a> (byte **private_key)</td></tr>
-<tr class="memdesc:a9ceadc3e0fa7565384ee1dea2c96935e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read the key from the disk (32 bytes) <br /></td></tr>
-<tr class="separator:a9ceadc3e0fa7565384ee1dea2c96935e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a707924fdfd72871734c26161495ae417"><td class="memItemLeft" align="right" valign="top"><a id="a707924fdfd72871734c26161495ae417"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a707924fdfd72871734c26161495ae417">receiveSeed</a> (byte **seed)</td></tr>
-<tr class="memdesc:a707924fdfd72871734c26161495ae417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read the seed from the disk (64 bytes) <br /></td></tr>
+<tr class="memitem:a85e763cd743bce960dbd344eabc49fc4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a85e763cd743bce960dbd344eabc49fc4">recoverPrivateKeyIndex</a> (unsigned int *key_index)</td></tr>
+<tr class="memdesc:a85e763cd743bce960dbd344eabc49fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read 4 byte key index from the disk.  <a href="classWallet.html#a85e763cd743bce960dbd344eabc49fc4">More...</a><br /></td></tr>
+<tr class="separator:a85e763cd743bce960dbd344eabc49fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a707924fdfd72871734c26161495ae417"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a707924fdfd72871734c26161495ae417">receiveSeed</a> (byte **seed)</td></tr>
+<tr class="memdesc:a707924fdfd72871734c26161495ae417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read the 64 bytes seed from the disk.  <a href="classWallet.html#a707924fdfd72871734c26161495ae417">More...</a><br /></td></tr>
 <tr class="separator:a707924fdfd72871734c26161495ae417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab185ac11e2ed36dc125a710e841c2294"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#ab185ac11e2ed36dc125a710e841c2294">generateSeed</a> (byte **seed)</td></tr>
-<tr class="memdesc:ab185ac11e2ed36dc125a710e841c2294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a seed (64 bytes) from a pseudo-random cryptographic safe entropy source provided by the system.  <a href="classWallet.html#ab185ac11e2ed36dc125a710e841c2294">More...</a><br /></td></tr>
+<tr class="memdesc:ab185ac11e2ed36dc125a710e841c2294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a 64 bytes seed from a pseudo-random cryptographic safe entropy source provided by the system.  <a href="classWallet.html#ab185ac11e2ed36dc125a710e841c2294">More...</a><br /></td></tr>
 <tr class="separator:ab185ac11e2ed36dc125a710e841c2294"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0486ffe924c68a0af18bc3bf3ee7d29"><td class="memItemLeft" align="right" valign="top"><a id="af0486ffe924c68a0af18bc3bf3ee7d29"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#af0486ffe924c68a0af18bc3bf3ee7d29">getPublicKey</a> (byte **public_key)</td></tr>
-<tr class="memdesc:af0486ffe924c68a0af18bc3bf3ee7d29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the public key(33 bytes in the compressed form) from an existing private key. <br /></td></tr>
-<tr class="separator:af0486ffe924c68a0af18bc3bf3ee7d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01793c3a139d62607e8d7bfcaf4c1249"><td class="memItemLeft" align="right" valign="top"><a id="a01793c3a139d62607e8d7bfcaf4c1249"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a01793c3a139d62607e8d7bfcaf4c1249">uint2uchar32</a> (byte **retorno, unsigned int)</td></tr>
-<tr class="memdesc:a01793c3a139d62607e8d7bfcaf4c1249"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts an uint to the equivalent bytes of byte data. <br /></td></tr>
-<tr class="separator:a01793c3a139d62607e8d7bfcaf4c1249"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c53c3fabdc958baf9b4282b1742a074"><td class="memItemLeft" align="right" valign="top"><a id="a3c53c3fabdc958baf9b4282b1742a074"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a3c53c3fabdc958baf9b4282b1742a074">createKey</a> (byte **destination)</td></tr>
-<tr class="memdesc:a3c53c3fabdc958baf9b4282b1742a074"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new key. <br /></td></tr>
-<tr class="separator:a3c53c3fabdc958baf9b4282b1742a074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8060b5c0ed71d3e13b3d8cb32514685a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a8060b5c0ed71d3e13b3d8cb32514685a">generatePublicKey</a> (BIGNUM *private_key, EC_POINT **public_key)</td></tr>
+<tr class="memdesc:a8060b5c0ed71d3e13b3d8cb32514685a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the public key(33 bytes in the compressed form) from an existing private key.  <a href="classWallet.html#a8060b5c0ed71d3e13b3d8cb32514685a">More...</a><br /></td></tr>
+<tr class="separator:a8060b5c0ed71d3e13b3d8cb32514685a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f968663a789f5ec63712f9643e8017"><td class="memItemLeft" align="right" valign="top"><a id="aa2f968663a789f5ec63712f9643e8017"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#aa2f968663a789f5ec63712f9643e8017">uint2uchar32</a> (byte *retorno, unsigned int)</td></tr>
+<tr class="memdesc:aa2f968663a789f5ec63712f9643e8017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts an uint to the equivalent bytes of unsigned char data. <br /></td></tr>
+<tr class="separator:aa2f968663a789f5ec63712f9643e8017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a424f85a46220e4c58a3162047192c420"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a424f85a46220e4c58a3162047192c420">initializeGenerators</a> ()</td></tr>
+<tr class="memdesc:a424f85a46220e4c58a3162047192c420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed.  <a href="classWallet.html#a424f85a46220e4c58a3162047192c420">More...</a><br /></td></tr>
+<tr class="separator:a424f85a46220e4c58a3162047192c420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d757f76ad5e5b48787d1e3132fd7d1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a66d757f76ad5e5b48787d1e3132fd7d1">generatePrivateKey</a> (BIGNUM **destination, unsigned int key_index)</td></tr>
+<tr class="memdesc:a66d757f76ad5e5b48787d1e3132fd7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new private key.  <a href="classWallet.html#a66d757f76ad5e5b48787d1e3132fd7d1">More...</a><br /></td></tr>
+<tr class="separator:a66d757f76ad5e5b48787d1e3132fd7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:af9b41deb331b9ac9fb4048ea6a5e0a3a"><td class="memItemLeft" align="right" valign="top"><a id="af9b41deb331b9ac9fb4048ea6a5e0a3a"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#af9b41deb331b9ac9fb4048ea6a5e0a3a">chaincode</a> [32]</td></tr>
-<tr class="memdesc:af9b41deb331b9ac9fb4048ea6a5e0a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dataset destined to the creation of new child keys. <br /></td></tr>
-<tr class="separator:af9b41deb331b9ac9fb4048ea6a5e0a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fe0abdf536940d99aa0b1e593164c6a"><td class="memItemLeft" align="right" valign="top"><a id="a9fe0abdf536940d99aa0b1e593164c6a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a9fe0abdf536940d99aa0b1e593164c6a">key_index</a></td></tr>
-<tr class="memdesc:a9fe0abdf536940d99aa0b1e593164c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the child key. <br /></td></tr>
-<tr class="separator:a9fe0abdf536940d99aa0b1e593164c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac529ebfe89497b97a9fcf8c4388791d0"><td class="memItemLeft" align="right" valign="top"><a id="ac529ebfe89497b97a9fcf8c4388791d0"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#ac529ebfe89497b97a9fcf8c4388791d0">private_key_level_0</a> [32]</td></tr>
-<tr class="memdesc:ac529ebfe89497b97a9fcf8c4388791d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Private key derived from the Seed. <br /></td></tr>
-<tr class="separator:ac529ebfe89497b97a9fcf8c4388791d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a217200ae169cdbf3e43f58f972458b4a"><td class="memItemLeft" align="right" valign="top"><a id="a217200ae169cdbf3e43f58f972458b4a"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a217200ae169cdbf3e43f58f972458b4a">public_key_level_0</a> [33]</td></tr>
-<tr class="memdesc:a217200ae169cdbf3e43f58f972458b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Public key derived from the Seed. <br /></td></tr>
-<tr class="separator:a217200ae169cdbf3e43f58f972458b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2756d7521cd25267e071b72ab0cbbb66"><td class="memItemLeft" align="right" valign="top"><a id="a2756d7521cd25267e071b72ab0cbbb66"></a>
-byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a2756d7521cd25267e071b72ab0cbbb66">chaincode_level_0</a> [32]</td></tr>
-<tr class="memdesc:a2756d7521cd25267e071b72ab0cbbb66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Public key derived from the Seed. <br /></td></tr>
-<tr class="separator:a2756d7521cd25267e071b72ab0cbbb66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a905f01c98dfb239935ec141f382dcc07"><td class="memItemLeft" align="right" valign="top"><a id="a905f01c98dfb239935ec141f382dcc07"></a>
+BIGNUM *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a905f01c98dfb239935ec141f382dcc07">generator_private_key</a></td></tr>
+<tr class="memdesc:a905f01c98dfb239935ec141f382dcc07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Private key derived from the Seed. <br /></td></tr>
+<tr class="separator:a905f01c98dfb239935ec141f382dcc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ea66546e217667569ea13e008675cbc"><td class="memItemLeft" align="right" valign="top"><a id="a1ea66546e217667569ea13e008675cbc"></a>
+EC_POINT *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a1ea66546e217667569ea13e008675cbc">generator_public_key</a></td></tr>
+<tr class="memdesc:a1ea66546e217667569ea13e008675cbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Public key derived from the Seed. <br /></td></tr>
+<tr class="separator:a1ea66546e217667569ea13e008675cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a496e67a71c7a34267a9b32963465d6"><td class="memItemLeft" align="right" valign="top"><a id="a8a496e67a71c7a34267a9b32963465d6"></a>
+BIGNUM *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a8a496e67a71c7a34267a9b32963465d6">generator_chaincode</a></td></tr>
+<tr class="memdesc:a8a496e67a71c7a34267a9b32963465d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial Public key derived from the Seed. <br /></td></tr>
+<tr class="separator:a8a496e67a71c7a34267a9b32963465d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0643febd781d019b9c2242d62442ca80"><td class="memItemLeft" align="right" valign="top"><a id="a0643febd781d019b9c2242d62442ca80"></a>
+BN_CTX *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a0643febd781d019b9c2242d62442ca80">context</a></td></tr>
+<tr class="memdesc:a0643febd781d019b9c2242d62442ca80"><td class="mdescLeft">&#160;</td><td class="mdescRight">BIGNUM context to hold temporary variables useful for the lib. <br /></td></tr>
+<tr class="separator:a0643febd781d019b9c2242d62442ca80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a673649772ce79f3baeb6ee503fec00e4"><td class="memItemLeft" align="right" valign="top"><a id="a673649772ce79f3baeb6ee503fec00e4"></a>
+EC_GROUP *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWallet.html#a673649772ce79f3baeb6ee503fec00e4">curve</a></td></tr>
+<tr class="memdesc:a673649772ce79f3baeb6ee503fec00e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Curve used in the EC multiplication. <br /></td></tr>
+<tr class="separator:a673649772ce79f3baeb6ee503fec00e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>HDWallet class, destined to handle the creation and storage of keys. </p>
 <p>The <a class="el" href="classWallet.html" title="HDWallet class, destined to handle the creation and storage of keys.">Wallet</a> class implements a HDWallet according to Bitcoin implementation model. A cryptographic secure random number and a salt are used for the deterministic creation of milions of child private and public keys. For more information about this specific type of wallet, refer to the Bitcoin Documentation or O'Reily's "Mastering Bitcoin" book. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a66d757f76ad5e5b48787d1e3132fd7d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d757f76ad5e5b48787d1e3132fd7d1">&#9670;&nbsp;</a></span>generatePrivateKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Wallet::generatePrivateKey </td>
+          <td>(</td>
+          <td class="paramtype">BIGNUM **&#160;</td>
+          <td class="paramname"><em>destination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>key_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new private key. </p>
+<p>This function generates a new private key. The specific key is created based on the generators(that must be already initialized) and the key index, where 0 is the first possible key for that generator set, 1 is the second and so on. The first argument is a pointer for a non-initialized BIGNUM recipient and the second is the key index. The key index used as argument is stored for further recovery. </p>
+
+</div>
+</div>
+<a id="a8060b5c0ed71d3e13b3d8cb32514685a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8060b5c0ed71d3e13b3d8cb32514685a">&#9670;&nbsp;</a></span>generatePublicKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Wallet::generatePublicKey </td>
+          <td>(</td>
+          <td class="paramtype">BIGNUM *&#160;</td>
+          <td class="paramname"><em>private_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">EC_POINT **&#160;</td>
+          <td class="paramname"><em>public_key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates the public key(33 bytes in the compressed form) from an existing private key. </p>
+<p>The first argument is a pointer to a initialized existing private_key and the second is a pointer to a non-initialized EC_POINT where the public_key is supposed to be stored. The function executes an EC multiplication in order to create a public key from an already created private key. In te same way that Bitcoin does, the signature algorithm uses the secp256k1 curve. </p>
+
+</div>
+</div>
 <a id="ab185ac11e2ed36dc125a710e841c2294"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab185ac11e2ed36dc125a710e841c2294">&#9670;&nbsp;</a></span>generateSeed()</h2>
 
@@ -162,8 +238,116 @@ byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 </div><div class="memdoc">
 
-<p>Create a seed (64 bytes) from a pseudo-random cryptographic safe entropy source provided by the system. </p>
+<p>Create a 64 bytes seed from a pseudo-random cryptographic safe entropy source provided by the system. </p>
 <p>This function uses the /dev/urandom linux/unix file to obtain pseudo-random data generated by the O.S. </p>
+
+</div>
+</div>
+<a id="a0c15cb69b495714527f14af8bcf1c90a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c15cb69b495714527f14af8bcf1c90a">&#9670;&nbsp;</a></span>getKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classKey.html">Key</a> * Wallet::getKey </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>key_index</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a <a class="el" href="classKey.html">Key</a> object created either from the seed or recovered from the disk <br  />
+ </p>
+<p>This function is the gateway of the wallet for obtaining keys, the only argument is the key index itself. When the key index value is set to zero(default value) the wallet will try to recover a pre-existing key and if no stored key is found, the wallet returns the first key for that generator set. Again, if no generator set is available( there is no stored seed), the wallet will create one and return the first key for that set. When the key index is greater than zero, the respective key is returned for that set(if no stored seed is found it is created). </p><dl class="section return"><dt>Returns</dt><dd>Returns a <a class="el" href="classKey.html">Key</a> object pointer or nullptr if some process fail </dd></dl>
+
+</div>
+</div>
+<a id="a424f85a46220e4c58a3162047192c420"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a424f85a46220e4c58a3162047192c420">&#9670;&nbsp;</a></span>initializeGenerators()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Wallet::initializeGenerators </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed. </p>
+<p>This function initialize the generators. The generators are the first data level for the creation of child keys in the HDwallet model: master private key, master public key and chaincode. All these variables are initialized from a random seed, provided by other functions in this class. The seed is hashed(SHA512) and the first half of the resulting data is used for the master private key, while the second half is assigned as the master chaincode. the master public key is naturally obtained from the respective private key. </p>
+
+</div>
+</div>
+<a id="a707924fdfd72871734c26161495ae417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a707924fdfd72871734c26161495ae417">&#9670;&nbsp;</a></span>receiveSeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Wallet::receiveSeed </td>
+          <td>(</td>
+          <td class="paramtype">byte **&#160;</td>
+          <td class="paramname"><em>seed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tries to read the 64 bytes seed from the disk. </p>
+<p>This function seeks the disk for a previously stored 32 bytes seed, if none is found the generateSeed function is called and the resulting seed is stored on the disk. </p>
+
+</div>
+</div>
+<a id="a85e763cd743bce960dbd344eabc49fc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e763cd743bce960dbd344eabc49fc4">&#9670;&nbsp;</a></span>recoverPrivateKeyIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Wallet::recoverPrivateKeyIndex </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int *&#160;</td>
+          <td class="paramname"><em>key_index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tries to read 4 byte key index from the disk. </p>
+<p>This function seeks the disk for a previously stored 4 bytes key index. </p>
 
 </div>
 </div>

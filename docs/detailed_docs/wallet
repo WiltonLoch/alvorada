@@ -1,9 +1,0 @@
-/*! @file wallet.hpp
-    @brief wallet definition
-*/
-
-/*! @class wallet
-
-    The Wallet class implements a HDWallet according to Bitcoin implementation model. The initial seed
-
-*/

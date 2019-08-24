@@ -29,7 +29,7 @@ class Wallet{
         //!Curve used in the EC multiplication
         EC_GROUP *curve;
     
-        //! Tries to read the 32 bytes key from the disk
+        //! Tries to read 4 byte key index from the disk
         int recoverPrivateKeyIndex(unsigned int *key_index);
 
         //! Tries to read the 64 bytes seed from the disk

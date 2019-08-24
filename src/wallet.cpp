@@ -14,10 +14,10 @@ void Wallet::uint2uchar32(byte* retorno, unsigned int valor){
       retorno[3 - i] = valor>>(i*8); 
    }
 }
-
+/**
+* This function seeks the disk for a previously stored 4 bytes key index.
+*/
 int Wallet::recoverPrivateKeyIndex(unsigned int *key_index){
-    byte raw_key[32] = {0};
-
     std::fstream key_store_file("key", std::fstream::in);
     if(!key_store_file) return false;
 
@@ -25,14 +25,16 @@ int Wallet::recoverPrivateKeyIndex(unsigned int *key_index){
 
     return true;
 }
-
+/**
+* This function seeks the disk for a previously stored 32 bytes seed, if none is found the generateSeed function 
+* is called and the resulting seed is stored on the disk.
+*/
 int Wallet::receiveSeed(byte** seed){
     std::fstream seed_file;
     seed_file.open("seed", std::fstream::in);
     if(!seed_file){
         seed_file.open("seed", std::fstream::out | std::fstream::trunc);
         if(!generateSeed(seed)) return false;
-
         for (size_t i = 0; i < 32; i++){
             seed_file << (*seed)[i];
         }
@@ -67,8 +69,8 @@ int Wallet::generateSeed(byte** seed){
 }
 
 /**
-* The first argument is a pointer to a initialized existing private_key and the second is a pointer to a
-* return pointer where the public_key is supposed to be stored. The function executes an EC multiplication
+* The first argument is a pointer to a initialized existing private_key and the second is a pointer
+* to a non-initialized EC_POINT where the public_key is supposed to be stored. The function executes an EC multiplication
 * in order to create a public key from an already created private key. In te same way that Bitcoin does,
 * the signature algorithm uses the secp256k1 curve.
 */
@@ -91,7 +93,11 @@ int Wallet::generatePublicKey(BIGNUM* private_key, EC_POINT **public_key){
 }
 
 /**
-* 
+* This function initialize the generators. The generators are the first data level for the creation of child keys
+* in the HDwallet model: master private key, master public key and chaincode. All these variables are initialized
+* from a random seed, provided by other functions in this class. The seed is hashed(SHA512) and the first half
+* of the resulting data is used for the master private key, while the second half is assigned as the master chaincode.
+* the master public key is naturally obtained from the respective private key.
 */
 int Wallet::initializeGenerators(){
     byte hashed_seed[64];
@@ -112,6 +118,12 @@ int Wallet::initializeGenerators(){
     return true;
 }
 
+/**
+* This function generates a new private key. The specific key is created based on the generators(that must be already initialized)
+* and the key index, where 0 is the first possible key for that generator set, 1 is the second and so on. The first argument is a 
+* pointer for a non-initialized BIGNUM recipient and the second is the key index. The key index used
+* as argument is stored for further recovery.
+*/
 int Wallet::generatePrivateKey(BIGNUM **destination, unsigned int key_index){
     byte *composed_seed = new byte[69];
     byte hashed_seed[64];
@@ -136,7 +148,13 @@ int Wallet::generatePrivateKey(BIGNUM **destination, unsigned int key_index){
 }
 
 /**
-* 
+* This function is the gateway of the wallet for obtaining keys, the only argument is the key index itself.
+* When the key index value is set to zero(default value) the wallet will try to recover a pre-existing key and if no 
+* stored key is found, the wallet returns the first key for that generator set. Again, if no generator set is available(
+* there is no stored seed), the wallet will create one and return the first key for that set. 
+* When the key index is greater than zero, the respective key is returned for that set(if no stored seed is found it is created).
+* @return a Key object pointer or nullptr if some process fail
+* @param[in] key_index
 */
 Key* Wallet::getKey(unsigned int key_index){
     BIGNUM *private_key = nullptr;

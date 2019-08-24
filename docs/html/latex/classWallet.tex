@@ -1,0 +1,146 @@
+\hypertarget{classWallet}{}\doxysection{Wallet Class Reference}
+\label{classWallet}\index{Wallet@{Wallet}}
+
+
+H\+D\+Wallet class, destined to handle the creation and storage of keys.  
+
+
+
+
+{\ttfamily \#include $<$wallet.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKey}{Key}} $\ast$ \mbox{\hyperlink{classWallet_a0c15cb69b495714527f14af8bcf1c90a}{get\+Key}} (unsigned int key\+\_\+index=0)
+\begin{DoxyCompactList}\small\item\em Returns a \mbox{\hyperlink{classKey}{Key}} object created either from the seed or recovered from the disk ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classWallet_a85e763cd743bce960dbd344eabc49fc4}{recover\+Private\+Key\+Index}} (unsigned int $\ast$key\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Tries to read 4 byte key index from the disk. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_a707924fdfd72871734c26161495ae417}{receive\+Seed}} (byte $\ast$$\ast$seed)
+\begin{DoxyCompactList}\small\item\em Tries to read the 64 bytes seed from the disk. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_ab185ac11e2ed36dc125a710e841c2294}{generate\+Seed}} (byte $\ast$$\ast$seed)
+\begin{DoxyCompactList}\small\item\em Create a 64 bytes seed from a pseudo-\/random cryptographic safe entropy source provided by the system. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_a8060b5c0ed71d3e13b3d8cb32514685a}{generate\+Public\+Key}} (B\+I\+G\+N\+UM $\ast$private\+\_\+key, E\+C\+\_\+\+P\+O\+I\+NT $\ast$$\ast$public\+\_\+key)
+\begin{DoxyCompactList}\small\item\em Generates the public key(33 bytes in the compressed form) from an existing private key. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_aa2f968663a789f5ec63712f9643e8017}\label{classWallet_aa2f968663a789f5ec63712f9643e8017}} 
+void \mbox{\hyperlink{classWallet_aa2f968663a789f5ec63712f9643e8017}{uint2uchar32}} (byte $\ast$retorno, unsigned int)
+\begin{DoxyCompactList}\small\item\em Converts an uint to the equivalent bytes of unsigned char data. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_a424f85a46220e4c58a3162047192c420}{initialize\+Generators}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classWallet_a66d757f76ad5e5b48787d1e3132fd7d1}{generate\+Private\+Key}} (B\+I\+G\+N\+UM $\ast$$\ast$destination, unsigned int key\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Creates a new private key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classWallet_a905f01c98dfb239935ec141f382dcc07}\label{classWallet_a905f01c98dfb239935ec141f382dcc07}} 
+B\+I\+G\+N\+UM $\ast$ \mbox{\hyperlink{classWallet_a905f01c98dfb239935ec141f382dcc07}{generator\+\_\+private\+\_\+key}}
+\begin{DoxyCompactList}\small\item\em Initial Private key derived from the Seed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a1ea66546e217667569ea13e008675cbc}\label{classWallet_a1ea66546e217667569ea13e008675cbc}} 
+E\+C\+\_\+\+P\+O\+I\+NT $\ast$ \mbox{\hyperlink{classWallet_a1ea66546e217667569ea13e008675cbc}{generator\+\_\+public\+\_\+key}}
+\begin{DoxyCompactList}\small\item\em Initial Public key derived from the Seed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a8a496e67a71c7a34267a9b32963465d6}\label{classWallet_a8a496e67a71c7a34267a9b32963465d6}} 
+B\+I\+G\+N\+UM $\ast$ \mbox{\hyperlink{classWallet_a8a496e67a71c7a34267a9b32963465d6}{generator\+\_\+chaincode}}
+\begin{DoxyCompactList}\small\item\em Initial Public key derived from the Seed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a0643febd781d019b9c2242d62442ca80}\label{classWallet_a0643febd781d019b9c2242d62442ca80}} 
+B\+N\+\_\+\+C\+TX $\ast$ \mbox{\hyperlink{classWallet_a0643febd781d019b9c2242d62442ca80}{context}}
+\begin{DoxyCompactList}\small\item\em B\+I\+G\+N\+UM context to hold temporary variables useful for the lib. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classWallet_a673649772ce79f3baeb6ee503fec00e4}\label{classWallet_a673649772ce79f3baeb6ee503fec00e4}} 
+E\+C\+\_\+\+G\+R\+O\+UP $\ast$ \mbox{\hyperlink{classWallet_a673649772ce79f3baeb6ee503fec00e4}{curve}}
+\begin{DoxyCompactList}\small\item\em Curve used in the EC multiplication. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+H\+D\+Wallet class, destined to handle the creation and storage of keys. 
+
+The \mbox{\hyperlink{classWallet}{Wallet}} class implements a H\+D\+Wallet according to Bitcoin implementation model. A cryptographic secure random number and a salt are used for the deterministic creation of milions of child private and public keys. For more information about this specific type of wallet, refer to the Bitcoin Documentation or O\textquotesingle{}Reily\textquotesingle{}s \char`\"{}\+Mastering Bitcoin\char`\"{} book. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classWallet_a66d757f76ad5e5b48787d1e3132fd7d1}\label{classWallet_a66d757f76ad5e5b48787d1e3132fd7d1}} 
+\index{Wallet@{Wallet}!generatePrivateKey@{generatePrivateKey}}
+\index{generatePrivateKey@{generatePrivateKey}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{generatePrivateKey()}{generatePrivateKey()}}
+{\footnotesize\ttfamily int Wallet\+::generate\+Private\+Key (\begin{DoxyParamCaption}\item[{B\+I\+G\+N\+UM $\ast$$\ast$}]{destination,  }\item[{unsigned int}]{key\+\_\+index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates a new private key. 
+
+This function generates a new private key. The specific key is created based on the generators(that must be already initialized) and the key index, where 0 is the first possible key for that generator set, 1 is the second and so on. The first argument is a pointer for a non-\/initialized B\+I\+G\+N\+UM recipient and the second is the key index. The key index used as argument is stored for further recovery. \mbox{\Hypertarget{classWallet_a8060b5c0ed71d3e13b3d8cb32514685a}\label{classWallet_a8060b5c0ed71d3e13b3d8cb32514685a}} 
+\index{Wallet@{Wallet}!generatePublicKey@{generatePublicKey}}
+\index{generatePublicKey@{generatePublicKey}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{generatePublicKey()}{generatePublicKey()}}
+{\footnotesize\ttfamily int Wallet\+::generate\+Public\+Key (\begin{DoxyParamCaption}\item[{B\+I\+G\+N\+UM $\ast$}]{private\+\_\+key,  }\item[{E\+C\+\_\+\+P\+O\+I\+NT $\ast$$\ast$}]{public\+\_\+key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Generates the public key(33 bytes in the compressed form) from an existing private key. 
+
+The first argument is a pointer to a initialized existing private\+\_\+key and the second is a pointer to a non-\/initialized E\+C\+\_\+\+P\+O\+I\+NT where the public\+\_\+key is supposed to be stored. The function executes an EC multiplication in order to create a public key from an already created private key. In te same way that Bitcoin does, the signature algorithm uses the secp256k1 curve. \mbox{\Hypertarget{classWallet_ab185ac11e2ed36dc125a710e841c2294}\label{classWallet_ab185ac11e2ed36dc125a710e841c2294}} 
+\index{Wallet@{Wallet}!generateSeed@{generateSeed}}
+\index{generateSeed@{generateSeed}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{generateSeed()}{generateSeed()}}
+{\footnotesize\ttfamily int Wallet\+::generate\+Seed (\begin{DoxyParamCaption}\item[{byte $\ast$$\ast$}]{seed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Create a 64 bytes seed from a pseudo-\/random cryptographic safe entropy source provided by the system. 
+
+This function uses the /dev/urandom linux/unix file to obtain pseudo-\/random data generated by the O.\+S. \mbox{\Hypertarget{classWallet_a0c15cb69b495714527f14af8bcf1c90a}\label{classWallet_a0c15cb69b495714527f14af8bcf1c90a}} 
+\index{Wallet@{Wallet}!getKey@{getKey}}
+\index{getKey@{getKey}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classKey}{Key}} $\ast$ Wallet\+::get\+Key (\begin{DoxyParamCaption}\item[{unsigned int}]{key\+\_\+index = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Returns a \mbox{\hyperlink{classKey}{Key}} object created either from the seed or recovered from the disk ~\newline
+ 
+
+This function is the gateway of the wallet for obtaining keys, the only argument is the key index itself. When the key index value is set to zero(default value) the wallet will try to recover a pre-\/existing key and if no stored key is found, the wallet returns the first key for that generator set. Again, if no generator set is available( there is no stored seed), the wallet will create one and return the first key for that set. When the key index is greater than zero, the respective key is returned for that set(if no stored seed is found it is created). \begin{DoxyReturn}{Returns}
+a \mbox{\hyperlink{classKey}{Key}} object pointer or nullptr if some process fail 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em key\+\_\+index} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classWallet_a424f85a46220e4c58a3162047192c420}\label{classWallet_a424f85a46220e4c58a3162047192c420}} 
+\index{Wallet@{Wallet}!initializeGenerators@{initializeGenerators}}
+\index{initializeGenerators@{initializeGenerators}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{initializeGenerators()}{initializeGenerators()}}
+{\footnotesize\ttfamily int Wallet\+::initialize\+Generators (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialize the genetors(private, public key and chaincode) with direct data from the hashed seed. 
+
+This function initialize the generators. The generators are the first data level for the creation of child keys in the H\+Dwallet model\+: master private key, master public key and chaincode. All these variables are initialized from a random seed, provided by other functions in this class. The seed is hashed(\+S\+H\+A512) and the first half of the resulting data is used for the master private key, while the second half is assigned as the master chaincode. the master public key is naturally obtained from the respective private key. \mbox{\Hypertarget{classWallet_a707924fdfd72871734c26161495ae417}\label{classWallet_a707924fdfd72871734c26161495ae417}} 
+\index{Wallet@{Wallet}!receiveSeed@{receiveSeed}}
+\index{receiveSeed@{receiveSeed}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{receiveSeed()}{receiveSeed()}}
+{\footnotesize\ttfamily int Wallet\+::receive\+Seed (\begin{DoxyParamCaption}\item[{byte $\ast$$\ast$}]{seed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Tries to read the 64 bytes seed from the disk. 
+
+This function seeks the disk for a previously stored 32 bytes seed, if none is found the generate\+Seed function is called and the resulting seed is stored on the disk. \mbox{\Hypertarget{classWallet_a85e763cd743bce960dbd344eabc49fc4}\label{classWallet_a85e763cd743bce960dbd344eabc49fc4}} 
+\index{Wallet@{Wallet}!recoverPrivateKeyIndex@{recoverPrivateKeyIndex}}
+\index{recoverPrivateKeyIndex@{recoverPrivateKeyIndex}!Wallet@{Wallet}}
+\doxysubsubsection{\texorpdfstring{recoverPrivateKeyIndex()}{recoverPrivateKeyIndex()}}
+{\footnotesize\ttfamily int Wallet\+::recover\+Private\+Key\+Index (\begin{DoxyParamCaption}\item[{unsigned int $\ast$}]{key\+\_\+index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Tries to read 4 byte key index from the disk. 
+
+This function seeks the disk for a previously stored 4 bytes key index. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/wilton/alvorada/include/wallet.\+hpp\item 
+/home/wilton/alvorada/src/wallet.\+cpp\end{DoxyCompactItemize}

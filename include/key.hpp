@@ -22,13 +22,13 @@ class Key{
         Key();
         ~Key();
 
-        //!Retorna o endereço criado pela chave pública em questão
+        //!Returns the address generated from the public key
         unsigned char* getEndereco();
 
-        //!Escreve a chave pública na saída padrão
+        //!Prints the private key in the stdout
         void printPublicKey();
 
-        //!Escreve a chave privada na saída padrão
+        //!Prints the private key in the stdout
         void printPrivateKey();
 
         //!Set the key index for possible further generation reference
@@ -40,8 +40,8 @@ class Key{
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);
 
-        //!Assina um conjunto de dados com a chave privada
-        void assinar();
+        //!Signs a data chunk with the private key
+        void sign();
 
 };
 
