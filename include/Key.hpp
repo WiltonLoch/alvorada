@@ -20,28 +20,29 @@ class Key{
 
     public:
         Key();
-        ~Key();
+        ~Key();              
 
-        //!Returns the address generated from the public key
-        unsigned char* getEndereco();
-
-        //!Prints the private key in the stdout
-        void printPublicKey();
-
-        //!Prints the private key in the stdout
-        void printPrivateKey();
+        //!Signs a data chunk with the private key
+        void sign(unsigned char* data);
 
         //!Set the key index for possible further generation reference
         void setKeyIndex(unsigned int key_index);
         
         //!Set the key index for possible further generation reference
         unsigned int getKeyIndex();
+
+        //!Returns the address generated from the public key
+        unsigned char* getEndereco();
         
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);
 
-        //!Signs a data chunk with the private key
-        void sign();
+
+        //!Prints the private key in the stdout
+        void printPublicKey();
+
+        //!Prints the private key in the stdout
+        void printPrivateKey();  
 
 };
 

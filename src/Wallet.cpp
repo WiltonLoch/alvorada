@@ -1,4 +1,4 @@
-#include <wallet.hpp>
+#include <Wallet.hpp>
 #include <fstream>
 #include <iostream>
 #include <bitset>
@@ -172,9 +172,9 @@ Key* Wallet::getKey(unsigned int key_index){
     generatePrivateKey(&private_key, key_index);
     
     generatePublicKey(private_key, &public_key);
-    printf("key index: %d\n", key_index);
-    printf("priv: %s\n", BN_bn2hex(const_cast<const BIGNUM*>(private_key)));
-    printf("pub: %s\n\n", EC_POINT_point2hex(curve, public_key, POINT_CONVERSION_COMPRESSED, context));
+    // printf("key index: %d\n", key_index);
+    // printf("priv: %s\n", BN_bn2hex(const_cast<const BIGNUM*>(private_key)));
+    // printf("pub: %s\n\n", EC_POINT_point2hex(curve, public_key, POINT_CONVERSION_COMPRESSED, context));
 
     if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
     if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();

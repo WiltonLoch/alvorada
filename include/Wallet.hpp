@@ -2,7 +2,7 @@
 #define WALLET_H
 
 #include <stdio.h>
-#include <key.hpp>
+#include <Key.hpp>
 
 typedef unsigned char byte;
 
