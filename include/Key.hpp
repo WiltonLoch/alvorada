@@ -37,7 +37,6 @@ class Key{
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);
 
-
         //!Prints the private key in the stdout
         void printPublicKey();
 

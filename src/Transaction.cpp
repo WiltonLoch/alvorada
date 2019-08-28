@@ -1,11 +1,9 @@
 #include <Transaction.hpp>
 #include <cstring>
 
-Transaction::Transaction(unsigned int version, unsigned char *address, unsigned char signature_size, unsigned char *signature, unsigned char tx_type){
+Transaction::Transaction(unsigned int version, unsigned char *address, unsigned char tx_type){
     this->version = version;
     this->address = address;
-    this->signature_size = signature_size;
-    this->signature = signature;
     this->tx_type = tx_type;
 }
 

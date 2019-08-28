@@ -11,7 +11,7 @@ class Transaction{
 
         unsigned char tx_type;
     public:
-        Transaction(unsigned int version, unsigned char *address, unsigned char signature_size, unsigned char *signature, unsigned char tx_type);
+        Transaction(unsigned int version, unsigned char *address, unsigned char tx_type);
         Transaction(unsigned char* raw_data);
         ~Transaction();
 
