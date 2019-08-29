@@ -12,12 +12,12 @@ GraphImplementation::~GraphImplementation(){}
 unsigned char* GraphImplementation::generateRawData(int &size){
 	std::vector<unsigned char*> raw_descriptions;
 	std::vector<unsigned char*> raw_info;
-	int teste_var = 33000;
+	int teste_var = 5;
 	unsigned char* teste_convert = (unsigned char*)(&teste_var);
 	printf("%d\n", sizeof(teste_var));
 
-	std::bitset<32> bitteste (teste_convert[0]);
-    	for(int i = 1; i < 4; i++){
+	std::bitset<32> bitteste (teste_convert[3]);
+    	for(int i = 2; i >= 0; i--){
        		bitteste = bitteste<<8;    
 	        bitteste |= teste_convert[i];
 	}
