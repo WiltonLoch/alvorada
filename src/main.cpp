@@ -18,7 +18,7 @@ int main(){
 
     int a = 0;
 
-    graphFacade->generateRawData(a, "teste_grafo.g");
+    graphFacade->generateRawData(a, "teste_grafo");
 
     return 0;
 }

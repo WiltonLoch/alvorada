@@ -8,12 +8,14 @@
 class GraphImplementation : public GraphBasicStructure{
     private:
         std::vector<std::string> node_descriptions;
+    	std::vector<std::vector<std::pair<int, int>>> graph;
     public:
         GraphImplementation();
         ~GraphImplementation();
         
         unsigned char* generateRawData(int &size);
         void initializeFromFile(std::string filename);
+	void printGraph();
 };
 
 #endif
