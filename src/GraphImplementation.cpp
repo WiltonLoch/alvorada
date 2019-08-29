@@ -2,11 +2,33 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <bitset>
+#include <iostream>
 
 GraphImplementation::GraphImplementation(){}
 GraphImplementation::~GraphImplementation(){}
 
+
 unsigned char* GraphImplementation::generateRawData(int &size){
+	std::vector<unsigned char*> raw_descriptions;
+	std::vector<unsigned char*> raw_info;
+	int teste_var = 33000;
+	unsigned char* teste_convert = (unsigned char*)(&teste_var);
+	printf("%d\n", sizeof(teste_var));
+
+	std::bitset<32> bitteste (teste_convert[0]);
+    	for(int i = 1; i < 4; i++){
+       		bitteste = bitteste<<8;    
+	        bitteste |= teste_convert[i];
+	}
+	std::cout << "Digest: " << bitteste.to_string() << std::endl;
+
+//	for(size_t i = 0; i < graph.size(); i++){
+//		for(size_t j = 0; j < graph[i].size(); j++){
+//					
+//		}	
+//	}
+
     return nullptr;
 }
 

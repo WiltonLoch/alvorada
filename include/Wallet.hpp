@@ -30,16 +30,16 @@ class Wallet{
         EC_GROUP *curve;
     
         //! Tries to read 4 byte key index from the disk
-        int recoverPrivateKeyIndex(unsigned int *key_index);
+        int recoverPrivateKeyIndex(unsigned int &key_index);
 
         //! Tries to read the 64 bytes seed from the disk
-        int receiveSeed(byte** seed);
+        int receiveSeed(byte* &seed);
 
         //! Create a 64 bytes seed from a pseudo-random cryptographic safe entropy source provided by the system
-        int generateSeed(byte** seed);
+        int generateSeed(byte* &seed);
 
         //! Generates the public key(33 bytes in the compressed form) from an existing private key
-        int generatePublicKey(BIGNUM *private_key, EC_POINT **public_key);
+        int generatePublicKey(BIGNUM *private_key, EC_POINT* &public_key);
 
         //! Converts an uint to the equivalent bytes of unsigned char data
         void uint2uchar32(byte* retorno, unsigned int);
@@ -48,7 +48,7 @@ class Wallet{
         int initializeGenerators();
 
         //! Creates a new private key
-        int generatePrivateKey(BIGNUM **destination, unsigned int key_index);
+        int generatePrivateKey(BIGNUM* &destination, unsigned int key_index);
 
     public:
         Wallet();
