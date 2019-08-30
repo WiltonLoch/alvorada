@@ -2,34 +2,48 @@
 #include <fstream>
 #include <sstream>
 #include <utility>
+#include <cstring>
 #include <bitset>
 #include <iostream>
 
 GraphImplementation::GraphImplementation(){}
 GraphImplementation::~GraphImplementation(){}
 
+void int2uchar32(unsigned char* pointer, int value){
+	for(int i = 0; i < 4; i++){
+		pointer[3 - i] = value>>(i*8); 
+	}
+}
 
 unsigned char* GraphImplementation::generateRawData(int &size){
-	std::vector<unsigned char*> raw_descriptions;
-	std::vector<unsigned char*> raw_info;
-	int teste_var = 5;
-	unsigned char* teste_convert = (unsigned char*)(&teste_var);
-	printf("%d\n", sizeof(teste_var));
-
-	std::bitset<32> bitteste (teste_convert[3]);
-    	for(int i = 2; i >= 0; i--){
-       		bitteste = bitteste<<8;    
-	        bitteste |= teste_convert[i];
+	size = 8 * graph.size() + 4; // allocates space to write graph size(4 bytes) plus string sizes and edges amount (graph_size * 8)
+	for(size_t i = 0; i < graph.size(); i++){
+		size += node_descriptions[i].length(); //Each node has a description that holds the machine configuration, wich also needs to be stored, therefore the sizes are collected
+		size += graph[i].size() * 12; //Each node has a pair of int and another pair of int (3x4 bytes)
 	}
-	std::cout << "Digest: " << bitteste.to_string() << std::endl;
 
-//	for(size_t i = 0; i < graph.size(); i++){
-//		for(size_t j = 0; j < graph[i].size(); j++){
-//					
-//		}	
-//	}
+	unsigned char *raw_data = new unsigned char[size];
+	int2uchar32(raw_data, graph.size());
 
-    return nullptr;
+	int offset = 4;// starts at four because the graph size is already stored
+	for(size_t i = 0; i < graph.size(); i++){
+		int2uchar32(raw_data + offset, node_descriptions[i].length());// stores string length 
+		offset += 4;//moves offset int size
+		memcpy(raw_data + offset, node_descriptions[i].c_str(), node_descriptions[i].length());
+		offset +=  node_descriptions[i].length();//moves offset by the size of the stored string
+		int2uchar32(raw_data + offset, graph[i].size());// stores the amount of edges
+		offset += 4;
+		for(size_t j = 0; j < graph[i].size(); j++){
+			int2uchar32(raw_data + offset, graph[i][j].first);
+			offset += 4;
+			int2uchar32(raw_data + offset, graph[i][j].second.first);
+			offset += 4;
+			int2uchar32(raw_data + offset, graph[i][j].second.second);
+			offset += 4;
+		}	
+	}
+
+    return raw_data;
 }
 
 void GraphImplementation::initializeFromFile(std::string filename){
@@ -47,12 +61,13 @@ void GraphImplementation::initializeFromFile(std::string filename){
 			
 			int size = 0;
 			graph_file >> size;
-			std::vector<std::pair<int, int>> edges;
+			std::vector<std::pair<int, std::pair<int, int>>> edges;
 			for(int j = 0; j < size; j++){	
-				int destiny, weight;
+				int destiny, bandwidth, jitter;
 				graph_file >> destiny;
-				graph_file >> weight;
-				edges.push_back(std::make_pair(destiny, weight));
+				graph_file >> bandwidth;
+				graph_file >> jitter;
+				edges.push_back(std::make_pair(destiny, std::make_pair(bandwidth, jitter)));
 			}
 			graph.push_back(edges);
 		}

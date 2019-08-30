@@ -1,11 +1,11 @@
 5
-cpu:1 sdsdgkj: sdgjskdg>: sdgjsdk
-4 1 1 2 2 3 3 4 4
-dkajksfj askfjaks aksjfaks aksjfas
-1 1 1
-cpu:1 sdsdgkj: sdgjskdg>: sdgjsdk
-1 0 1
-dkajksfj askfjaks aksjfaks aksjfas
-1 1 1
-dkajksfj askfjaks aksjfaks aksjfas
-1 1 1
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+4 1 50 150 2 50 100 3 25 100 4 25 150
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+1 1 75 100
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+1 0 25 50
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+1 1 25 75
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+1 1 30 60

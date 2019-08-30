@@ -5,20 +5,27 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 #include <GraphFacade.hpp>
-
-using namespace std;
+#include <bitset>
+#include <iostream>
 
 int main(){
     Wallet *wallet = new Wallet();
     Key *key = wallet->getKey();
 
-    ServiceRequest *tx_req = new ServiceRequest(1, NULL, 0, 1, 1, NULL);
-
     GraphFacade *graphFacade = new GraphFacade();
 
-    int a = 0;
+    int data_size = 0;
 
-    graphFacade->generateRawData(a, "teste_grafo");
+    unsigned char* teste;
+
+    teste = graphFacade->generateRawData(data_size, "teste_grafo");
+
+    ServiceRequest *tx_req = new ServiceRequest(1, NULL, 0, 1, data_size, teste);
+
+    /* for(int i = 1; i < data_size; i++){ */
+	    /* std::bitset<32> bitteste (teste[i]); */
+	    /* std::cout << bitteste.to_string() << std::endl; */
+    /* } */
 
     return 0;
 }

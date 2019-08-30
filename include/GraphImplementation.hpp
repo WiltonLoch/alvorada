@@ -8,7 +8,7 @@
 class GraphImplementation : public GraphBasicStructure{
     private:
         std::vector<std::string> node_descriptions;
-    	std::vector<std::vector<std::pair<int, int>>> graph;
+    	std::vector<std::vector<std::pair<int, std::pair<int, int>>>> graph;
     public:
         GraphImplementation();
         ~GraphImplementation();
