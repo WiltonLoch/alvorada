@@ -11,7 +11,8 @@ unsigned char* GraphFacade::generateRawData(int &size, std::string filename){
     return raw_data;
 }
 
-GraphBasicStructure* GraphFacade::generateStructure(unsigned char* &raw_data){
+GraphBasicStructure* GraphFacade::generateStructure(unsigned char* raw_data){
     GraphBasicStructure *teste = new GraphImplementation();
+    teste->initializeFromRawData(raw_data);
     return teste;
 }

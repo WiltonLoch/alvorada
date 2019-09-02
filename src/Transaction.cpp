@@ -8,11 +8,16 @@ Transaction::Transaction(unsigned int version, unsigned char *address, unsigned 
 }
 
 Transaction::Transaction(unsigned char* raw_tx){
-    memcpy(&version, raw_tx, sizeof(unsigned int));
-    memcpy(address, raw_tx, 20);
-    memcpy(&signature_size, raw_tx, sizeof(unsigned char));
-    memcpy(signature, raw_tx, 9);
-    memcpy(&tx_type, raw_tx, sizeof(unsigned char));
+	unsigned int offset = 0;
+	memcpy(&version, raw_tx + offset, sizeof(unsigned int));
+	offset += sizeof(unsigned int);
+	memcpy(address, raw_tx + offset, 20);
+	offset += 20;
+	memcpy(&signature_size, raw_tx + offset, sizeof(unsigned char));
+	offset += sizeof(unsigned char);
+	memcpy(signature, raw_tx + offset, 9);
+	offset += 9;
+	memcpy(&tx_type, raw_tx + offset, sizeof(unsigned char));
 }
 
 Transaction::~Transaction(){}

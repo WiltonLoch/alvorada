@@ -10,6 +10,7 @@ class GraphBasicStructure{
 
         virtual unsigned char* generateRawData(int &size) = 0;
         virtual void initializeFromFile(std::string filename) = 0;
+        virtual void initializeFromRawData(unsigned char* raw_data) = 0;
 };
 
 #endif

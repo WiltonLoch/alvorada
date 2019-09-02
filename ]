@@ -20,14 +20,14 @@ int main(){
 
 	teste = graphFacade->generateRawData(data_size, "teste_grafo");
 
-	/* graphFacade->generateStructure(teste); */
+	graphFacade->generateStructure(teste);
 
-	ServiceRequest *tx_req = new ServiceRequest(1, NULL, 0, 1, data_size, teste);
+	/* ServiceRequest *tx_req = new ServiceRequest(1, NULL, 0, 1, data_size, teste); */
 
-   /* for(int i = 0; i < data_size; i++){ */
+    /* for(int i = 1; i < data_size; i++){ */
 	    /* std::bitset<32> bitteste (teste[i]); */
 	    /* std::cout << bitteste.to_string() << std::endl; */
-   /*  } */
+    /* } */
 
 	return 0;
 }

@@ -13,7 +13,7 @@ class GraphFacade{
 
         unsigned char* generateRawData(int &size, std::string filename);
 
-        GraphBasicStructure* generateStructure(unsigned char* &raw_data);
+        GraphBasicStructure* generateStructure(unsigned char* raw_data);
 };
 
 #endif

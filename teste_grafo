@@ -3,7 +3,7 @@ cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
 4 1 50 150 2 50 100 3 25 100 4 25 150
 cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
 1 1 75 100
-cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
+cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.98
 1 0 25 50
 cpu: 2, freq: 3.8Ghz, mem:8GB, HD:500GB, av: 99.97
 1 1 25 75

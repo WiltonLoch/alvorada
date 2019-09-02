@@ -11,7 +11,41 @@ GraphImplementation::~GraphImplementation(){}
 
 void int2uchar32(unsigned char* pointer, int value){
 	for(int i = 0; i < 4; i++){
-		pointer[3 - i] = value>>(i*8); 
+		pointer[3 - i] = value>>(i*8); //Encodes an int value to its binary big endian representation
+	}
+}
+
+void uchar322int(unsigned char* pointer, int &value){
+	int tmp = 0;
+	for(int i = 0; i < 4; i++){
+		tmp = tmp<<(i*8) | pointer[i];//Creates an Integer from a binary big Endian representation
+	}
+	value = tmp;
+}
+
+void GraphImplementation::initializeFromRawData(unsigned char* raw_data){
+	int graph_size, offset = 0, string_length, total_edges;
+	uchar322int(raw_data, graph_size);//Reads the graph size from the bytestream
+	offset += 4;//move the offset by 4 bytes(int size)
+	for(int i = 0; i < graph_size; i++){
+		uchar322int(raw_data + offset, string_length);//reads the current node description string size
+		offset += 4;
+		node_descriptions.push_back(std::string(reinterpret_cast<const char*>(raw_data + offset), string_length));//creates a the node description string reading string_length bytes from the bytestream
+		offset += string_length;//moves the offset by the size of the string
+		uchar322int(raw_data + offset, total_edges);//reads the number of edges for the current node
+		offset += 4;
+		std::vector<std::pair<int, std::pair<int, int>>> edges;//temporary vector for edge storage
+		for(int j = 0; j < total_edges; j++){//reads edge information(destiny, bandwidth and jitter in this specific implementation)
+			int destiny, bandwidth, jitter;
+			uchar322int(raw_data + offset, destiny);
+			offset += 4;
+			uchar322int(raw_data + offset, bandwidth); 
+			offset += 4;
+			uchar322int(raw_data + offset, jitter); 
+			offset += 4;
+			edges.push_back(std::make_pair(destiny, std::make_pair(bandwidth, jitter)));//populates the edge vector with each edge information read
+		}
+		graph.push_back(edges);//assigns edges vector to the current node
 	}
 }
 
@@ -83,7 +117,7 @@ void GraphImplementation::printGraph(){
 	for(size_t i = 0; i < graph.size(); i++){
 		printf("%s\n", node_descriptions[i].c_str());
 		for(size_t j = 0; j < graph[i].size(); j++){
-			printf("%d -- %d\n", graph[i][j].first, graph[i][j].second);
+			printf("%d -- %d, %d\n", graph[i][j].first, graph[i][j].second.first, graph[i][j].second.second);
 		}
 	}
 
