@@ -11,7 +11,7 @@ class ServiceRequest : public Transaction{
         unsigned int data_size;
         unsigned char *data;
     public:
-        ServiceRequest(unsigned int version, unsigned char *address, unsigned char tx_type, unsigned char lock_model, unsigned int data_size, unsigned char *data);
+        ServiceRequest(unsigned int version, unsigned char *address, unsigned char tx_type, unsigned char lock_model, std::string filename);
         ServiceRequest(unsigned char* raw_tx);
 
         bool verify();

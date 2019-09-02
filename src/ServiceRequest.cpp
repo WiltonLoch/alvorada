@@ -2,11 +2,9 @@
 #include <ServiceRequest.hpp>
 
 
-ServiceRequest::ServiceRequest(unsigned int version, unsigned char *address, unsigned char tx_type, unsigned char lock_model, unsigned int data_size, unsigned char *data) :
+ServiceRequest::ServiceRequest(unsigned int version, unsigned char *address, unsigned char tx_type, unsigned char lock_model, std::string filename) :
 Transaction(version, address, tx_type){
     this->lock_model = lock_model;
-    this->data_size = data_size;
-    this->data = data;
 }
 
 ServiceRequest::ServiceRequest(unsigned char* raw_tx) : Transaction(raw_tx){
