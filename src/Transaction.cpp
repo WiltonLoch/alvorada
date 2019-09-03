@@ -22,15 +22,22 @@ Transaction::Transaction(unsigned char* raw_tx){
 
 Transaction::~Transaction(){}
 
-unsigned char* Transaction::generateRawCommomData(){
+unsigned char* Transaction::generateRawCommonData(unsigned int &end_offset){
+    unsigned int offset = 0;
     //the initial size of the raw data is the sum of the commom information of all transactions:
     //version(4 byte) + address(20 bytes) + signature size(1 bytes) + signature(9 bytes) + type(1 byte)
     unsigned char* raw_tx = new unsigned char[35];
     memcpy(raw_tx, &version, sizeof(unsigned int));
+    offset += sizeof(unsigned int);
     memcpy(raw_tx, address, 20);
+    offset += 20;
     memcpy(raw_tx, &signature_size, sizeof(unsigned char));
-    memcpy(raw_tx, signature, 9);
+    offset += sizeof(unsigned char);
+    memcpy(raw_tx, signature, 9); 
+    offset += 9;
     memcpy(raw_tx, &tx_type, sizeof(unsigned char));
+
+    end_offset = 35;
 
     return raw_tx;
 }

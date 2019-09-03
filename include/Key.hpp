@@ -16,7 +16,7 @@ class Key{
         unsigned char* address;
 
         //!Cria um endereço (padrão Bitcoin) através da chave pública
-        unsigned char* criarEndereco();
+        void generateAddress();
 
     public:
         Key();
@@ -32,7 +32,7 @@ class Key{
         unsigned int getKeyIndex();
 
         //!Returns the address generated from the public key
-        unsigned char* getEndereco();
+        unsigned char* getAddress();
         
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);

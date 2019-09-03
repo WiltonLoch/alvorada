@@ -15,3 +15,11 @@ unsigned int Key::getKeyIndex(){
 void Key::setKeyPair(EC_KEY *key_pair){
     this->key_pair = key_pair;
 }
+
+void generateAddress(){
+
+}
+
+unsigned char* Key::getAddress(){
+	return address;
+}

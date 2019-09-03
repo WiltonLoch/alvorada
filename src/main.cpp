@@ -14,15 +14,7 @@ int main(){
 
 	GraphFacade *graphFacade = new GraphFacade();
 
-	int data_size = 0;
-
-	unsigned char* teste;
-
-	teste = graphFacade->generateRawData(data_size, "teste_grafo");
-
-	/* graphFacade->generateStructure(teste); */
-
-	ServiceRequest *tx_req = new ServiceRequest(1, NULL, 0, 1, data_size, teste);
+	ServiceRequest *tx_req = new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo");
 
    /* for(int i = 0; i < data_size; i++){ */
 	    /* std::bitset<32> bitteste (teste[i]); */

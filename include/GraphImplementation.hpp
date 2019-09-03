@@ -13,7 +13,7 @@ class GraphImplementation : public GraphBasicStructure{
         GraphImplementation();
         ~GraphImplementation();
         
-        unsigned char* generateRawData(int &size);
+        unsigned char* generateRawData(unsigned int &size);
         void initializeFromFile(std::string filename);
         void initializeFromRawData(unsigned char* raw_data);
 	void printGraph();

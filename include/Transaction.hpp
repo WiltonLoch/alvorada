@@ -15,8 +15,8 @@ class Transaction{
         Transaction(unsigned char* raw_data);
         ~Transaction();
 
-        unsigned char* generateRawCommomData();
-        virtual bool verify() = 0;
+        unsigned char* generateRawCommonData(unsigned int &end_offset);
+        virtual unsigned char* exportRawData() = 0;
 
         unsigned int getVersion();
         void setVersion(unsigned int version);

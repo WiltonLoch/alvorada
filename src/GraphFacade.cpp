@@ -3,7 +3,7 @@
 GraphFacade::GraphFacade(){}
 GraphFacade::~GraphFacade(){}
 
-unsigned char* GraphFacade::generateRawData(int &size, std::string filename){
+unsigned char* GraphFacade::generateRawData(unsigned int &size, std::string filename){
     GraphBasicStructure *tmp = new GraphImplementation();
     tmp->initializeFromFile(filename);
     unsigned char* raw_data = tmp->generateRawData(size);

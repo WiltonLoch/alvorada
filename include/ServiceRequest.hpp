@@ -14,8 +14,7 @@ class ServiceRequest : public Transaction{
         ServiceRequest(unsigned int version, unsigned char *address, unsigned char tx_type, unsigned char lock_model, std::string filename);
         ServiceRequest(unsigned char* raw_tx);
 
-        bool verify();
-
+	unsigned int getVersion();
         unsigned char* exportRawData();
 };
 

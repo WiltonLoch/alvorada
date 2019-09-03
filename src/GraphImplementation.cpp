@@ -49,7 +49,7 @@ void GraphImplementation::initializeFromRawData(unsigned char* raw_data){
 	}
 }
 
-unsigned char* GraphImplementation::generateRawData(int &size){
+unsigned char* GraphImplementation::generateRawData(unsigned int &size){
 	size = 8 * graph.size() + 4; // allocates space to write graph size(4 bytes) plus string sizes and edges amount (graph_size * 8)
 	for(size_t i = 0; i < graph.size(); i++){
 		size += node_descriptions[i].length(); //Each node has a description that holds the machine configuration, wich also needs to be stored, therefore the sizes are collected
