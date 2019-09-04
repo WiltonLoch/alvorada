@@ -23,7 +23,9 @@ class Key{
         ~Key();              
 
         //!Signs a data chunk with the private key
-        void sign(unsigned char* data);
+        unsigned char* sign(unsigned char* data, unsigned int data_size, unsigned char &signature_size);
+
+        bool verify(unsigned char* data, unsigned int data_size, unsigned char* raw_sig, unsigned int signature_size);
 
         //!Set the key index for possible further generation reference
         void setKeyIndex(unsigned int key_index);

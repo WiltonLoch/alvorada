@@ -23,3 +23,7 @@ ServiceRequest::~ServiceRequest(){
 void ServiceRequest::generateDataHash(){
 	SHA256(data, data_size, data_hash);	
 }
+
+void ServiceRequest::setLockModel(unsigned char lockmodel){
+	this->lock_model = lockmodel;
+}

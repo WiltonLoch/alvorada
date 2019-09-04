@@ -24,8 +24,10 @@ class Transaction{
 	template <class Archive> void serialize(Archive & ar, unsigned int version){
 		ar & version;
 		for(int i = 0; i < 20; i++)ar & address[i];
-		ar & signature_size;
-		if(!remove_signature_serialization) for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
+		if(!remove_signature_serialization){
+			ar & signature_size;
+		       	for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
+		}
 		ar & tx_type;
 	}
 	void removeSignatureSerialization();

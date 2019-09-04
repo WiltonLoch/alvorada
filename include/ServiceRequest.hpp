@@ -25,7 +25,7 @@ class ServiceRequest : public Transaction{
 	}
 
 	void generateDataHash();
-	unsigned int getVersion();
+	void setLockModel(unsigned char lockmodel);
 };
 
 #endif
