@@ -21,7 +21,7 @@ int main(){
 
 	signTX(key, tx_req);
 	/* tx_req->setLockModel(2); */
-	verifyTXSig(key, tx_req);
+	printf("ret %d\n", verifyTXSig(key, tx_req));
 
 
 	std::ofstream exit_stream("tx_req_serial");
