@@ -13,9 +13,9 @@ class Key{
     private:
         EC_KEY* key_pair;
         unsigned int key_index;
-        unsigned char* address;
+        char *address;
 
-        //!Cria um endereço (padrão Bitcoin) através da chave pública
+        //!Cria um endereço que trata-se da chave pública comprimida
         void generateAddress();
 
     public:
@@ -32,7 +32,7 @@ class Key{
         unsigned int getKeyIndex();
 
         //!Returns the address generated from the public key
-        unsigned char* getAddress();
+        char* getAddress();
         
         //!Set the key pair used for the signatures
         void setKeyPair(EC_KEY *key_pair);

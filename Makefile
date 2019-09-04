@@ -7,10 +7,10 @@ SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC = g++
-CPPFLAGS = -Iinclude -Ilib/openssl/include/
+CPPFLAGS = -Iinclude -Ilib/openssl/include/ -I../boost_1_71_0/
 CCFLAGS = -Wall
 LDFLAGS = 
-LDLIBS = -lssl -lcrypto
+LDLIBS = -lssl -lcrypto -lboost_serialization
 
 
 .PHONY: all clean

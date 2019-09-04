@@ -1,22 +1,35 @@
 #ifndef Transaction_H
 #define Transaction_H
+#include <string>
+#include <fstream>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 class Transaction{
     protected:
+	friend class boost::serialization::access;
         unsigned int version;
         unsigned char *tx_hash;
-        unsigned char *address;
+        char *address;
         unsigned char signature_size;
         unsigned char *signature;
-
         unsigned char tx_type;
+	
+	bool remove_signature_serialization = true;
     public:
-        Transaction(unsigned int version, unsigned char *address, unsigned char tx_type);
-        Transaction(unsigned char* raw_data);
-        ~Transaction();
+        Transaction(unsigned int version, char *address, unsigned char tx_type);
+        /* Transaction(unsigned char* raw_data); */
+        virtual ~Transaction();
 
-        unsigned char* generateRawCommonData(unsigned int &end_offset);
-        virtual unsigned char* exportRawData() = 0;
+	template <class Archive> void serialize(Archive & ar, unsigned int version){
+		ar & version;
+		for(int i = 0; i < 20; i++)ar & address[i];
+		ar & signature_size;
+		if(!remove_signature_serialization) for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
+		ar & tx_type;
+	}
+	void removeSignatureSerialization();
+	void addSignatureSerialization();
 
         unsigned int getVersion();
         void setVersion(unsigned int version);
