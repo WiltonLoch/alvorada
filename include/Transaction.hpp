@@ -6,50 +6,50 @@
 #include <boost/archive/binary_iarchive.hpp>
 
 class Transaction{
-    protected:
-	friend class boost::serialization::access;
-        unsigned int version;
-        unsigned char *tx_hash;
-        char *address;
-        unsigned char signature_size;
-        unsigned char *signature;
-        unsigned char tx_type;
-	
-	bool remove_signature_serialization = true;
-    public:
-        Transaction(unsigned int version, char *address, unsigned char tx_type);
-        /* Transaction(unsigned char* raw_data); */
-        virtual ~Transaction();
-
-	template <class Archive> void serialize(Archive & ar, unsigned int version){
-		ar & version;
-		for(int i = 0; i < 20; i++)ar & address[i];
-		if(!remove_signature_serialization){
-			ar & signature_size;
-		       	for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
+	private:
+		friend class boost::serialization::access;
+		template <class Archive> void serialize(Archive & ar, unsigned int version){
+			ar & version;
+			for(int i = 0; i < 20; i++)ar & address[i];
+			if(!remove_signature_serialization){
+				ar & signature_size;
+				for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
+			}
+			ar & tx_type;
 		}
-		ar & tx_type;
-	}
-	void removeSignatureSerialization();
-	void addSignatureSerialization();
+	protected:
+		unsigned int version;
+		unsigned char *tx_hash;
+		char *address;
+		unsigned char signature_size;
+		unsigned char *signature;
+		unsigned char tx_type;
+		bool remove_signature_serialization = true;
+    	public:
+		Transaction(unsigned int version, char *address, unsigned char tx_type);
+		/* Transaction(unsigned char* raw_data); */
+		virtual ~Transaction();
 
-        unsigned int getVersion();
-        void setVersion(unsigned int version);
+		void removeSignatureSerialization();
+		void addSignatureSerialization();
 
-        unsigned char* getTxHash();
-        void setTxHash(unsigned char* tx_hash);
+		unsigned int getVersion();
+		void setVersion(unsigned int version);
 
-        unsigned char* getAddress();
-        void setAddress(unsigned char* address);
+		unsigned char* getTxHash();
+		void setTxHash(unsigned char* tx_hash);
 
-        unsigned char getSignatureSize();
-        void setSignatureSize(unsigned char signature_size);
+		unsigned char* getAddress();
+		void setAddress(unsigned char* address);
 
-        unsigned char* getSignature();
-        void setSignature(unsigned char *signature);
+		unsigned char getSignatureSize();
+		void setSignatureSize(unsigned char signature_size);
 
-        unsigned char getTxType();
-        void setTxType(unsigned char tx_type);
+		unsigned char* getSignature();
+		void setSignature(unsigned char *signature);
+
+		unsigned char getTxType();
+		void setTxType(unsigned char tx_type);
 
         
 };

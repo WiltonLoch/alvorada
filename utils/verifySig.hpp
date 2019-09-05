@@ -2,10 +2,7 @@
 #define UTILS_VERIFY_SIG_H
 
 #include <fstream>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/export.hpp>
 #include <iostream>
 #include <sstream>
@@ -18,7 +15,7 @@ bool verifyTXSig(Key* key, ServiceRequest* tx){
 	tx->removeSignatureSerialization();
 	std::stringstream serialized_string;
 	{
-		boost::archive::text_oarchive out_archive(serialized_string);
+		boost::archive::binary_oarchive out_archive(serialized_string);
 
 		out_archive << *tx;
 	}

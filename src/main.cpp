@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <fstream>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <sign.hpp>
 #include <verifySig.hpp>
 
@@ -20,9 +19,8 @@ int main(){
 	ServiceRequest *tx_req = new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo");
 
 	signTX(key, tx_req);
-	/* tx_req->setLockModel(2); */
+	tx_req->setVersion(2);
 	printf("ret %d\n", verifyTXSig(key, tx_req));
-
 
 	std::ofstream exit_stream("tx_req_serial");
 	{
