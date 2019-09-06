@@ -3,11 +3,13 @@ TARGET = alvorada
 SRC_DIR = src
 OBJ_DIR = obj
 
+INCLUDE_DIRS = include lib/openssl/include/ ../boost_1_71_0/ utils 
+
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC = g++
-CPPFLAGS = -Iinclude -Ilib/openssl/include/ -I../boost_1_71_0/ -Iutils
+CPPFLAGS = $(foreach dir, $(INCLUDE_DIRS), -I$(dir)) 
 CCFLAGS = -Wall
 LDFLAGS = 
 LDLIBS = -lssl -lcrypto -lboost_serialization
