@@ -4,6 +4,14 @@
 
 Key::Key(){}
 
+Key::Key(char* address){
+	EC_POINT * pub_key;
+	if(EC_POINT_point2hex(EC_GROUP_new_by_curve_name(NID_secp256k1), const_cast<const char*>(address), pub_key, BN_CTX_new()) == NULL){
+		printf("Error recovering public key from address\n");
+}
+	if (EC_KEY_set_public_key(ec_key, pub_key) != 1) ERR_get_error();
+}
+
 Key::~Key(){
 	EC_KEY_free(key_pair);
 	CRYPTO_cleanup_all_ex_data();

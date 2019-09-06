@@ -11,9 +11,9 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 
-namespace verify{
+namespace signature{
 
-	bool verifyTXSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
+	bool verifyServiceRequestSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
 		tx->removeSignatureSerialization();
 		std::stringstream serialized_string;
 		{

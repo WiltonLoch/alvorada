@@ -31,6 +31,13 @@ unsigned char Transaction::getSignatureSize(){
 	return signature_size;
 }
 
+void Transaction::setAddress(char* address){
+	this->address = address;
+}
+
+char* Transaction::getAddress(){
+	return address;
+}
 
 void Transaction::setVersion(unsigned int version){
 	this->version = version;

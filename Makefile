@@ -5,7 +5,7 @@ OBJ_DIR = obj
 
 INCLUDE_DIRS = include lib/openssl/include/ ../boost_1_71_0/ utils 
 
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
+SRC = $(foreach dir, $(SRC_DIR), $(wildcard $(dir)/*.cpp))
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC = g++

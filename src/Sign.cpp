@@ -14,7 +14,7 @@
 #include <Key.hpp>
 #include <ServiceRequest.hpp>
 
-namespace sign{
+namespace signature{
 
 	void signServiceRequest(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
 		tx->removeSignatureSerialization();

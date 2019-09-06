@@ -20,6 +20,7 @@ class Key{
 
     public:
         Key();
+	Key(char* address);
         ~Key();              
 
         //!Signs a data chunk with the private key

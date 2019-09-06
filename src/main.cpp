@@ -2,7 +2,7 @@
 #include <fstream>
 #include <boost/archive/binary_oarchive.hpp>
 #include <sign.hpp>
-#include <verifySig.hpp>
+#include <commomVerificator.hpp>
 
 #include <Key.hpp>
 #include <Wallet.hpp>
@@ -18,9 +18,9 @@ int main(){
 
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo"));
 
-	sign::signServiceRequest(key, tx_req);
-	/* tx_req->setVersion(2); */
-	printf("ret %d\n", verify::verifyTXSig(key, tx_req));
+	signature::signServiceRequest(key, tx_req);
+	tx_req->setVersion(2);
+	printf("ret %d\n", verification::verifyCommonData(tx_req));
 
 	std::ofstream exit_stream("tx_req_serial");
 	{
