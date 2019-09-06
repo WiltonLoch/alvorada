@@ -9,7 +9,7 @@ class Transaction{
 	private:
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
-			ar & version;
+			ar & this->version;
 			for(int i = 0; i < 20; i++)ar & address[i];
 			if(!remove_signature_serialization){
 				ar & signature_size;

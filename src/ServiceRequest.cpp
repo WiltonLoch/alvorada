@@ -8,8 +8,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <openssl/sha.h>
 
-ServiceRequest::ServiceRequest(unsigned int version, char *address, unsigned char tx_type, unsigned char lock_model, std::string filename) :
-Transaction(version, address, tx_type){
+ServiceRequest::ServiceRequest(unsigned int version, char *address, unsigned char tx_type, unsigned char lock_model, std::string filename) : Transaction(version, address, tx_type){
 	this->lock_model = lock_model;
 	GraphFacade* graphFacade = new GraphFacade();
 	data = graphFacade->generateRawData(data_size, filename);

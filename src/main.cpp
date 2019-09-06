@@ -13,14 +13,14 @@
 #include <iostream>
 
 int main(){
-	Wallet *wallet = new Wallet();
-	Key *key = wallet->getKey();
+	std::unique_ptr<Wallet> wallet (new Wallet());
+	std::shared_ptr<Key> key (wallet->getKey());
 
-	ServiceRequest *tx_req = new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo");
+	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo"));
 
-	signTX(key, tx_req);
-	tx_req->setVersion(2);
-	printf("ret %d\n", verifyTXSig(key, tx_req));
+	sign::signServiceRequest(key, tx_req);
+	/* tx_req->setVersion(2); */
+	printf("ret %d\n", verify::verifyTXSig(key, tx_req));
 
 	std::ofstream exit_stream("tx_req_serial");
 	{

@@ -11,17 +11,10 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 
-bool verifyTXSig(Key* key, ServiceRequest* tx){
-	tx->removeSignatureSerialization();
-	std::stringstream serialized_string;
-	{
-		boost::archive::binary_oarchive out_archive(serialized_string);
+namespace verify{
 
-		out_archive << *tx;
-	}
-	tx->addSignatureSerialization();
+	bool verifyTXSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx);
 
-	return key->verify(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), tx->getSignature(), static_cast<unsigned int>(tx->getSignatureSize()));
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <bitset>
+#include <memory>
 #include <openssl/sha.h>
 
 typedef unsigned char byte;
@@ -160,12 +161,12 @@ int Wallet::generatePrivateKey(BIGNUM* &destination, unsigned int key_index){
 * @return a Key object pointer or nullptr if some process fail
 * @param[in] key_index
 */
-Key* Wallet::getKey(unsigned int key_index){
+std::shared_ptr<Key> Wallet::getKey(unsigned int key_index){
     BIGNUM *private_key = nullptr;
     EC_POINT *public_key = nullptr;
     
     EC_KEY *ec_key = nullptr;
-    Key *key = nullptr;
+    std::shared_ptr<Key> key (new Key());
 
     context = BN_CTX_new();
     if ((ec_key = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error();    
@@ -183,7 +184,6 @@ Key* Wallet::getKey(unsigned int key_index){
     if (EC_KEY_set_private_key(ec_key, private_key) != 1)    ERR_get_error();
     if (EC_KEY_set_public_key(ec_key, public_key) != 1)   ERR_get_error();
 
-    key = new Key();
     key->setKeyPair(ec_key);
     key->setKeyIndex(key_index);
 

@@ -1,6 +1,8 @@
 #ifndef WALLET_H
 #define WALLET_H
 
+#include <memory>
+
 #include <stdio.h>
 #include <Key.hpp>
 
@@ -55,7 +57,7 @@ class Wallet{
         ~Wallet();       
         
         //!Returns a Key object created either from the seed or recovered from the disk        
-        Key* getKey(unsigned int key_index = 0);        
+	std::shared_ptr<Key> getKey(unsigned int key_index = 0);        
 };
 
 #endif
