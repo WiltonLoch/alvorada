@@ -17,7 +17,7 @@ int main(){
 	std::unique_ptr<Wallet> wallet (new Wallet());
 	std::shared_ptr<Key> key (wallet->getKey());
 
-	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo"));
+	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 
 	signature::signServiceRequest(key, tx_req);
 	/* tx_req->setLockModel(2); */

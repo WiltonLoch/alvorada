@@ -14,6 +14,8 @@ class GraphFacade{
         unsigned char* generateRawData(unsigned int &size, std::string filename);
 
         GraphBasicStructure* generateStructure(unsigned char* raw_data);
+
+	bool verifyGraph(unsigned char* raw_data);
 };
 
 #endif

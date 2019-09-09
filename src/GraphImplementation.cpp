@@ -112,6 +112,15 @@ void GraphImplementation::initializeFromFile(std::string filename){
 	graph_file.close();
 }
 
+bool verifyConnectivity(){
+	std::unique_ptr<bool> connected (new bool [graph.size()]);
+	for(int i = 0; i < graph.size(); i++){
+		for(int j = 0; j < graph[i].size(); j++){
+				
+		}
+	}	
+}
+
 void GraphImplementation::printGraph(){
 	printf("%d\n", graph.size());
 	for(size_t i = 0; i < graph.size(); i++){
