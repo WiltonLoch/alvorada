@@ -7,8 +7,10 @@
 namespace verification{
 	
 	bool verifyServiceRequest(std::shared_ptr<ServiceRequest> tx){
-		std::shared_ptr<Key>
-		if(!signature::verifyServiceRequestSig(new Key(tx->getAddress), tx)) return false;
+		printf("tx_addr: %s\n", tx->getAddress());
+		std::shared_ptr<Key> key (new Key(tx->getAddress()));
+		printf("tx_addr: %s\n", key->getAddress());
+		if(!signature::verifyServiceRequestSig(key, tx)) return false;
 		return true;
 	}
 

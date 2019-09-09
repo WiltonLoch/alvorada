@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <bitset>
+#include <iostream>
 #include <fstream>
+
 #include <boost/archive/binary_oarchive.hpp>
 
 #include <Key.hpp>
@@ -7,8 +10,8 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 #include <GraphFacade.hpp>
-#include <bitset>
-#include <iostream>
+#include <SignSR.hpp>
+#include <ServiceRequestVerificator.hpp>
 
 int main(){
 	std::unique_ptr<Wallet> wallet (new Wallet());
@@ -17,8 +20,8 @@ int main(){
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 0, 1, "teste_grafo"));
 
 	signature::signServiceRequest(key, tx_req);
-	tx_req->setVersion(2);
-	printf("ret %d\n", verification::verifyServiceRequestSig(tx_req));
+	/* tx_req->setLockModel(2); */
+	printf("ret %d\n", verification::verifyServiceRequest(tx_req));
 
 	std::ofstream exit_stream("tx_req_serial");
 	{

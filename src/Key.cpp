@@ -5,11 +5,26 @@
 Key::Key(){}
 
 Key::Key(char* address){
-	EC_POINT * pub_key;
-	if(EC_POINT_point2hex(EC_GROUP_new_by_curve_name(NID_secp256k1), const_cast<const char*>(address), pub_key, BN_CTX_new()) == NULL){
-		printf("Error recovering public key from address\n");
-}
-	if (EC_KEY_set_public_key(ec_key, pub_key) != 1) ERR_get_error();
+        EC_GROUP *curve;
+	unsigned int error;
+
+    	if((curve = EC_GROUP_new_by_curve_name(NID_secp256k1)) == NULL){
+       		error = ERR_get_error();    
+        	printf("Error creating the Eliptic curve = 0x%lx\n", error);
+    	} 
+
+	EC_POINT * pub_key = EC_POINT_new(curve);
+	pub_key = EC_POINT_hex2point(EC_GROUP_new_by_curve_name(NID_secp256k1), reinterpret_cast<const char*>(address), pub_key, BN_CTX_new()); 
+	if(pub_key == NULL) printf("Error recovering public key from address\n");
+
+	key_pair = EC_KEY_new();
+    	/* if ((key_pair = EC_KEY_new_by_curve_name(NID_secp256k1)) == NULL) ERR_get_error(); */    
+	EC_KEY_set_group(key_pair, curve);
+	if (EC_KEY_set_public_key(key_pair, pub_key) != 1){ 
+       		error = ERR_get_error();    
+        	printf("Error setting the public key = 0x%lx\n", error);
+	}
+	generateAddress();
 }
 
 Key::~Key(){

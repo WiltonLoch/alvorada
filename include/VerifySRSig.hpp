@@ -1,4 +1,4 @@
-/* #ifndef UTILS_VERIFY_SIG_H */ 
+#ifndef UTILS_VERIFY_SIG_H 
 #define UTILS_VERIFY_SIG_H
 
 #include <fstream>
