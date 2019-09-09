@@ -16,6 +16,9 @@ class GraphImplementation : public GraphBasicStructure{
         unsigned char* generateRawData(unsigned int &size);
         void initializeFromFile(std::string filename);
         void initializeFromRawData(unsigned char* raw_data);
+	bool verifyConnectivity();
+	bool verifyCoherence();
+	bool verifyInfo();
 	void printGraph();
 };
 

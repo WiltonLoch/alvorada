@@ -11,6 +11,7 @@ class ServiceRequest : public Transaction{
 			ar & boost::serialization::base_object<Transaction>(*this);
 			ar & lock_model;
 			ar & data_size;
+			if(data == nullptr) data = new unsigned char[data_size];
 			for(unsigned int i = 0; i < data_size; i++)ar & data[i];
 		}
 
@@ -18,6 +19,7 @@ class ServiceRequest : public Transaction{
 		unsigned int data_size;
 		unsigned char *data;
     	public:
+		ServiceRequest();
 		ServiceRequest(unsigned int version, char *address, unsigned char lock_model, std::string filename);
 		~ServiceRequest();
 		/* ServiceRequest(unsigned char* raw_tx); */

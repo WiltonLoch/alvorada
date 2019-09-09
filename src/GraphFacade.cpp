@@ -1,3 +1,4 @@
+#include <memory>
 #include <GraphFacade.hpp>
 
 GraphFacade::GraphFacade(){}
@@ -10,14 +11,17 @@ unsigned char* GraphFacade::generateRawData(unsigned int &size, std::string file
 	return raw_data;
 }
 
-GraphBasicStructure* GraphFacade::generateStructure(unsigned char* raw_data){
+std::shared_ptr<GraphBasicStructure> GraphFacade::generateStructure(unsigned char* raw_data){
 	std::unique_ptr<GraphBasicStructure> tmp (new GraphImplementation());
 	tmp->initializeFromRawData(raw_data);
-	return teste;
+	return tmp;
 }
 
-bool verifyGraph(){
+bool GraphFacade::verifyGraph(unsigned char* raw_data){
 	std::unique_ptr<GraphBasicStructure> tmp (new GraphImplementation());
 	tmp->initializeFromRawData(raw_data);
-	tmp->verifyConnectivity();
+	if(!tmp->verifyCoherence()) return false;
+	if(!tmp->verifyConnectivity()) return false;
+	if(!tmp->verifyInfo()) return false;
+	return true;
 }

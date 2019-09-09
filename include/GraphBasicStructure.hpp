@@ -12,6 +12,8 @@ class GraphBasicStructure{
         virtual void initializeFromFile(std::string filename) = 0;
         virtual void initializeFromRawData(unsigned char* raw_data) = 0;
 	virtual bool verifyConnectivity() = 0;
+	virtual bool verifyCoherence() = 0;
+	virtual bool verifyInfo() = 0;
 };
 
 #endif

@@ -2,9 +2,14 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 
+Transaction::Transaction(){}
+
 Transaction::Transaction(unsigned int version, char *address, unsigned char tx_type)  : version(version), address(address), tx_type(tx_type){}
 
-Transaction::~Transaction(){}
+Transaction::~Transaction(){
+	delete[] address;
+	delete[] signature;
+}
 
 void Transaction::removeSignatureSerialization(){
 	remove_signature_serialization = true;
@@ -24,7 +29,6 @@ unsigned char* Transaction::getSignature(){
 
 void Transaction::setSignatureSize(unsigned char signature_size){
 	this->signature_size = signature_size;
-	printf("%d\n", signature_size);
 }
 
 unsigned char Transaction::getSignatureSize(){
@@ -45,4 +49,14 @@ void Transaction::setVersion(unsigned int version){
 
 unsigned int Transaction::getVersion(){
 	return version;
+}
+
+unsigned char* getTxHash(){
+	return tx_hash;
+}
+unsigned char* getTxHash(){
+	return tx_hash;
+}
+void setTxHash(unsigned char* tx_hash){
+	this->tx_hash = tx_hash;
 }

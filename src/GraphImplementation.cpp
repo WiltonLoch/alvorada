@@ -1,10 +1,12 @@
-#include <GraphImplementation.hpp>
 #include <fstream>
 #include <sstream>
 #include <utility>
 #include <cstring>
 #include <bitset>
 #include <iostream>
+#include <memory>
+
+#include <GraphImplementation.hpp>
 
 GraphImplementation::GraphImplementation(){}
 GraphImplementation::~GraphImplementation(){}
@@ -112,13 +114,36 @@ void GraphImplementation::initializeFromFile(std::string filename){
 	graph_file.close();
 }
 
-bool verifyConnectivity(){
-	std::unique_ptr<bool> connected (new bool [graph.size()]);
+bool GraphImplementation::verifyInfo(){
+	for(int i = 0; i < graph.size(); i++) if(node_descriptions[i].length() <= 15) return false;
+	return true;
+}
+
+bool GraphImplementation::verifyCoherence(){
+	std::vector<bool> appeared (graph.size(), false);
 	for(int i = 0; i < graph.size(); i++){
+		if(graph[i].size() >= graph.size()) return false;	
 		for(int j = 0; j < graph[i].size(); j++){
-				
+			if(graph[i][j].first >= graph.size()) return false;
+			if(appeared[graph[i][j].first]) return false; 
+			appeared[graph[i][j].first] = true; 
 		}
+		appeared.assign(graph.size(), false);
+	}
+	return true;
+}
+
+bool GraphImplementation::verifyConnectivity(){
+	bool result = true;
+	std::vector<bool> connected(graph.size(), false);
+	for(int i = 0; i < graph.size(); i++){
+		if(graph[i].size() > 0)	connected[i] = true;
+		for(int j = 0; j < graph[i].size(); j++){
+			connected[graph[i][j].first] = true;				
+		}
+		for(int j = 0; j < graph.size(); j++) result &= connected[j];
 	}	
+	return result;
 }
 
 void GraphImplementation::printGraph(){
