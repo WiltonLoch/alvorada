@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <fstream>
 #include <boost/archive/binary_oarchive.hpp>
-#include <sign.hpp>
-#include <commomVerificator.hpp>
 
 #include <Key.hpp>
 #include <Wallet.hpp>
@@ -20,7 +18,7 @@ int main(){
 
 	signature::signServiceRequest(key, tx_req);
 	tx_req->setVersion(2);
-	printf("ret %d\n", verification::verifyCommonData(tx_req));
+	printf("ret %d\n", verification::verifyServiceRequestSig(tx_req));
 
 	std::ofstream exit_stream("tx_req_serial");
 	{

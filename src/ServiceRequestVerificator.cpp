@@ -1,15 +1,14 @@
 #ifndef COMMOM_VERIFICATOR_H
 #define COMMON_VERIFICATOR_H
 
-#include <commomVerificator.hpp>
 #include <Key.hpp>
-#include <VerifySig.hpp>
+#include <VerifySRSig.hpp>
 
 namespace verification{
 	
 	bool verifyServiceRequest(std::shared_ptr<ServiceRequest> tx){
-		verifyCommonData(tx);
-		if(!signature::verifyServiceRequestSig(key, tx)) return false;
+		std::shared_ptr<Key>
+		if(!signature::verifyServiceRequestSig(new Key(tx->getAddress), tx)) return false;
 		return true;
 	}
 
