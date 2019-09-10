@@ -17,7 +17,9 @@
 namespace signature{
 
 	template<class T>void signTransaction(std::shared_ptr<Key> key, std::shared_ptr<T> tx){
+		tx->removeHashSerialization();
 		tx->removeSignatureSerialization();
+
 		std::stringstream serialized_string;	
 		{
 			boost::archive::binary_oarchive out_archive(serialized_string);
@@ -29,6 +31,7 @@ namespace signature{
 		tx->setSignatureSize(size);
 
 		tx->addSignatureSerialization();
+		tx->addHashSerialization();
 	}
 
 };

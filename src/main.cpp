@@ -26,7 +26,10 @@ int main(){
 	signature::signTransaction(key, tx_req);
 
 	hash::hashServiceRequest(tx_req);
+	std::stringstream filename;
 	/* tx_req->setLockModel(2); */
+	/* filename << "0x" << std::hex << std::uppercase << std::uppercase << tx_req->getHash()[0]; */
+	/* printf("filename: %s\n", filename.str().c_str()); */
 	std::ofstream exit_stream("tx_req_serial");
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);

@@ -7,6 +7,7 @@ Transaction::Transaction(){}
 Transaction::Transaction(unsigned int version, char *address, unsigned char tx_type)  : version(version), address(address), tx_type(tx_type){}
 
 Transaction::~Transaction(){
+	delete[] tx_hash;
 	delete[] address;
 	delete[] signature;
 }
@@ -17,6 +18,14 @@ void Transaction::removeSignatureSerialization(){
 
 void Transaction::addSignatureSerialization(){
 	remove_signature_serialization = false;
+}
+
+void Transaction::removeHashSerialization(){
+	remove_hash_serialization = true;
+}
+
+void Transaction::addHashSerialization(){
+	remove_hash_serialization = false;
 }
 
 void Transaction::setSignature(unsigned char *signature){
