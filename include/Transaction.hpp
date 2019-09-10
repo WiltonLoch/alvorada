@@ -39,17 +39,14 @@ class Transaction{
 		unsigned int getVersion();
 		void setVersion(unsigned int version);
 
-		unsigned char* getTxHash();
-		void setTxHash(unsigned char* tx_hash);
+		unsigned char* getHash();
+		void setHash(unsigned char* tx_hash);
 
 		unsigned char getSignatureSize();
 		void setSignatureSize(unsigned char signature_size);
 
 		char* getAddress();
 		void setAddress(char *address);
-
-		unsigned char* getTxHash();
-		void setTxHash(unsigned char* tx_hash);
 
 		unsigned char* getSignature();
 		void setSignature(unsigned char *signature);

@@ -10,7 +10,7 @@
 #include <Key.hpp>
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
-#include <VerifySRSig.hpp>
+#include <Verify_SR_Sig.hpp>
 
 namespace signature{
 

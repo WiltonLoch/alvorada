@@ -12,7 +12,7 @@
 
 #include <Key.hpp>
 #include <ServiceRequest.hpp>
-#include <SignSR.hpp>
+#include <Sign_SR.hpp>
 
 namespace signature{
 

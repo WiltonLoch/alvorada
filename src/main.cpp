@@ -13,7 +13,8 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 #include <GraphFacade.hpp>
-#include <SignSR.hpp>
+#include <Sign_SR.hpp>
+#include <Hash_SR.hpp>
 #include <ServiceRequestVerificator.hpp>
 
 int main(){
@@ -25,12 +26,13 @@ int main(){
 	signature::signServiceRequest(key, tx_req);
 	/* tx_req->setLockModel(2); */
 
+	hash::hashServiceRequest(tx_req);
+
 	std::ofstream exit_stream("tx_req_serial");
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);
 		out_archive << *tx_req;
 	}
-	std::string teste(tx_req->getAddress());
 
 	std::ifstream in_stream("tx_req_serial");
 	std::shared_ptr<ServiceRequest> tx_req2(new ServiceRequest());

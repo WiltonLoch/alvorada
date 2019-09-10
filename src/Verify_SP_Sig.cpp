@@ -9,12 +9,12 @@
 
 #include <Key.hpp>
 #include <Transaction.hpp>
-#include <ServiceRequest.hpp>
-#include <VerifySRSig.hpp>
+#include <ServiceProposal.hpp>
+#include <Verify_SP_Sig.hpp>
 
 namespace signature{
 
-	bool verifyServiceRequestSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
+	bool verifyServiceProposalSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceProposal> tx){
 		tx->removeSignatureSerialization();
 		std::stringstream serialized_string;
 		{

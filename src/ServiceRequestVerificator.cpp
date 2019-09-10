@@ -4,7 +4,7 @@
 #include <config.hpp>
 
 #include <Key.hpp>
-#include <VerifySRSig.hpp>
+#include <Verify_SR_Sig.hpp>
 
 namespace verification{
 	

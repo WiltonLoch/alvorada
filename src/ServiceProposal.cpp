@@ -13,5 +13,5 @@ ServiceProposal::ServiceProposal(unsigned int version, char *address, unsigned c
 }
 
 ServiceProposal::~ServiceProposal(){
-	delete[] data;
+	delete [] serviceRequestHash;
 }

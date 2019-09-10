@@ -1,7 +1,7 @@
 #ifndef SERVICE_REQUEST_H
 #define SERVICE_REQUEST_H
 
-#include <boost/serialization/list.hpp>
+#include <boost/serialization/vector.hpp>
 
 #include <Transaction.hpp>
 #include <GraphFacade.hpp>

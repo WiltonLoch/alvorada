@@ -11,12 +11,12 @@
 #include <boost/serialization/export.hpp>
 
 #include <Key.hpp>
-#include <ServiceRequest.hpp>
-#include <SignSR.hpp>
+#include <ServiceProposal.hpp>
+#include <Sign_SP.hpp>
 
 namespace signature{
 
-	void signServiceRequest(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
+	void signServiceProposal(std::shared_ptr<Key> key, std::shared_ptr<ServiceProposal> tx){
 		tx->removeSignatureSerialization();
 		std::stringstream serialized_string;	
 		{

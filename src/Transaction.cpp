@@ -51,12 +51,9 @@ unsigned int Transaction::getVersion(){
 	return version;
 }
 
-unsigned char* getTxHash(){
+unsigned char* Transaction::getHash(){
 	return tx_hash;
 }
-unsigned char* getTxHash(){
-	return tx_hash;
-}
-void setTxHash(unsigned char* tx_hash){
+void Transaction::setHash(unsigned char* tx_hash){
 	this->tx_hash = tx_hash;
 }
