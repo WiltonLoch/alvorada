@@ -12,11 +12,11 @@
 
 #include <Key.hpp>
 #include <ServiceRequest.hpp>
-#include <Sign_SR.hpp>
+#include <ServiceProposal.hpp>
 
 namespace signature{
 
-	void signServiceRequest(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
+	template<class T>void signTransaction(std::shared_ptr<Key> key, std::shared_ptr<T> tx){
 		tx->removeSignatureSerialization();
 		std::stringstream serialized_string;	
 		{

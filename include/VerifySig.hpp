@@ -10,11 +10,11 @@
 #include <Key.hpp>
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
-#include <Verify_SR_Sig.hpp>
+#include <ServiceProposal.hpp>
 
 namespace signature{
 
-	bool verifyServiceRequestSig(std::shared_ptr<Key> key, std::shared_ptr<ServiceRequest> tx){
+	template<class T> bool verifyTransactionSig(std::shared_ptr<Key> key, std::shared_ptr<T> tx){
 		tx->removeSignatureSerialization();
 		std::stringstream serialized_string;
 		{
@@ -26,7 +26,6 @@ namespace signature{
 
 		return key->verify(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), tx->getSignature(), static_cast<unsigned int>(tx->getSignatureSize()));
 	}
-
 }
 
 #endif

@@ -4,16 +4,14 @@
 #include <config.hpp>
 
 #include <Key.hpp>
-#include <Verify_SR_Sig.hpp>
+#include <VerifySig.hpp>
 
 namespace verification{
 	
 	bool verifyServiceRequest(std::shared_ptr<ServiceRequest> tx){
-		printf("aaaa\n");
-		printf("tx_addr: %s\n",tx->getAddress());
 		std::shared_ptr<Key> key (new Key(tx->getAddress()));
 		if(tx->getVersion() != VERSION) return false;
-		if(!signature::verifyServiceRequestSig(key, tx)) return false;
+		if(!signature::verifyTransactionSig(key, tx)) return false;
 
 		std::unique_ptr<GraphFacade> graphFacade (new GraphFacade());
 		if(!graphFacade->verifyGraph(tx->getGraphData())) return false;

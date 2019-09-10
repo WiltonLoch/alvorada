@@ -2,4 +2,4 @@
 
 make clean
 make
-rm seed key
+./alvorada

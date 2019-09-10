@@ -13,8 +13,8 @@
 #include <Transaction.hpp>
 #include <ServiceRequest.hpp>
 #include <GraphFacade.hpp>
-#include <Sign_SR.hpp>
-#include <Hash_SR.hpp>
+#include <Sign.hpp>
+#include <Hash.hpp>
 #include <ServiceRequestVerificator.hpp>
 
 int main(){
@@ -23,11 +23,10 @@ int main(){
 
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 
-	signature::signServiceRequest(key, tx_req);
-	/* tx_req->setLockModel(2); */
+	signature::signTransaction(key, tx_req);
 
 	hash::hashServiceRequest(tx_req);
-
+	/* tx_req->setLockModel(2); */
 	std::ofstream exit_stream("tx_req_serial");
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);

@@ -15,7 +15,7 @@
 
 namespace hash{
 
-	bool hashServiceRequest(std::shared_ptr<ServiceRequest> tx){
+	template<class T> void hashServiceRequest(std::shared_ptr<T> tx){
 		std::stringstream serialized_string;
 		{
 			boost::archive::binary_oarchive out_archive(serialized_string);
