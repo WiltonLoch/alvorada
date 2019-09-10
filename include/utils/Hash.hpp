@@ -24,7 +24,7 @@ namespace hash{
 			out_archive << *tx;
 		}
 		unsigned char* hash = new unsigned char[32];
-		SHA256(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), hash);
+		SHA256(reinterpret_cast<const unsigned char*>(serialized_string.str().c_str()), serialized_string.str().length(), hash);
 		tx->setHash(hash);
 
 		tx->addHashSerialization();

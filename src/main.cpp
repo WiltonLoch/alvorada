@@ -26,17 +26,17 @@ int main(){
 	signature::signTransaction(key, tx_req);
 
 	hash::hashServiceRequest(tx_req);
-	std::stringstream filename;
 	/* tx_req->setLockModel(2); */
-	/* filename << "0x" << std::hex << std::uppercase << std::uppercase << tx_req->getHash()[0]; */
-	/* printf("filename: %s\n", filename.str().c_str()); */
-	std::ofstream exit_stream("tx_req_serial");
+	std::stringstream filename;
+	filename << "blockchain/" << tx_req->getHash();
+
+	std::ofstream exit_stream(filename.str().c_str());
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);
 		out_archive << *tx_req;
 	}
 
-	std::ifstream in_stream("tx_req_serial");
+	std::ifstream in_stream(filename.str().c_str());
 	std::shared_ptr<ServiceRequest> tx_req2(new ServiceRequest());
 	{
 		boost::archive::binary_iarchive in_archive(in_stream);
@@ -44,6 +44,7 @@ int main(){
 	}
 
 	printf("ret %d\n", verification::verifyServiceRequest(tx_req2));
+
    /* for(int i = 0; i < data_size; i++){ */
 	    /* std::bitset<32> bitteste (teste[i]); */
 	    /* std::cout << bitteste.to_string() << std::endl; */

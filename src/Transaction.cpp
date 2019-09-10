@@ -1,6 +1,8 @@
-#include <Transaction.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
+#include <openssl/bn.h>
+
+#include <Transaction.hpp>
 
 Transaction::Transaction(){}
 
@@ -60,9 +62,12 @@ unsigned int Transaction::getVersion(){
 	return version;
 }
 
-unsigned char* Transaction::getHash(){
-	return tx_hash;
+char* Transaction::getHash(){
+	BIGNUM *tmp_hash_val = BN_new();
+	BN_bin2bn(const_cast<const unsigned char *>(tx_hash), 32, tmp_hash_val);
+	return BN_bn2hex(tmp_hash_val);
 }
+
 void Transaction::setHash(unsigned char* tx_hash){
 	this->tx_hash = tx_hash;
 }
