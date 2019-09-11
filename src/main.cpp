@@ -16,6 +16,7 @@
 #include <Sign.hpp>
 #include <Hash.hpp>
 #include <ServiceRequestVerificator.hpp>
+#include <Block.hpp>
 
 int main(){
 	std::unique_ptr<Wallet> wallet (new Wallet());
@@ -23,10 +24,15 @@ int main(){
 
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 
+	std::unique_ptr<Block> block (new Block());
+
 	signature::signTransaction(key, tx_req);
 
 	hash::hashServiceRequest(tx_req);
 	/* tx_req->setLockModel(2); */
+
+	/* block->addTX(*tx_req); */
+
 	std::stringstream filename;
 	filename << "blockchain/" << tx_req->getHash();
 

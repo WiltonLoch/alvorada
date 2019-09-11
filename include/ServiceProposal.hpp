@@ -1,5 +1,5 @@
-#ifndef SERVICE_REQUEST_H
-#define SERVICE_REQUEST_H
+#ifndef SERVICE_PROPOSAL_H
+#define SERVICE_PROPOSAL_H
 
 #include <boost/serialization/vector.hpp>
 
