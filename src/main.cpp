@@ -23,18 +23,25 @@ int main(){
 	std::shared_ptr<Key> key (wallet->getKey());
 
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
+	std::shared_ptr<ServiceRequest> tx_req_b (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo2"));
 
 	std::unique_ptr<Block> block (new Block());
 
 	signature::signTransaction(key, tx_req);
+	signature::signTransaction(key, tx_req_b);
 
 	hash::hashServiceRequest(tx_req);
+	hash::hashServiceRequest(tx_req_b);
 	/* tx_req->setLockModel(2); */
-
-	/* block->addTX(*tx_req); */
+	block->addTX(tx_req);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req);
+	block->createMerkleTree();
 
 	std::stringstream filename;
-	filename << "blockchain/" << tx_req->getHash();
+	filename << "blockchain/" << tx_req->getHexHash();
 
 	std::ofstream exit_stream(filename.str().c_str());
 	{
@@ -47,6 +54,7 @@ int main(){
 	{
 		boost::archive::binary_iarchive in_archive(in_stream);
 		in_archive >> *tx_req2;
+		printf("aaaa\n");
 	}
 
 	printf("ret %d\n", verification::verifyServiceRequest(tx_req2));

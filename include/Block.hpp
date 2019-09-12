@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <utility>
 
 #include <boost/serialization/vector.hpp>
 
@@ -14,15 +15,15 @@ class Block{
 	private:
 		unsigned int block_size;
 		std::shared_ptr<BlockHeader> header;
-		unsigned int tx_amount;
-		std::vector<ServiceRequest> serviceRequests;
-		std::vector<ServiceProposal> serviceProposals;
+		std::vector<std::pair<int, int>> in_order;
+		std::vector<std::shared_ptr<ServiceRequest>> serviceRequests;
+		std::vector<std::shared_ptr<ServiceProposal>> serviceProposals;
 
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
 			ar & this->block_size;
 			if(header == nullptr) header = new BlockHeader();
-			ar & tx_amount;
+			ar & in_order.size();
 			ar & serviceRequests;
 			ar & serviceProposals;
 		}
@@ -35,8 +36,10 @@ class Block{
 
 		std::shared_ptr<BlockHeader> getBlockHeader();
 
-		void addTX(ServiceRequest tx);
-		void addTX(ServiceProposal tx);
+		void addTX(std::shared_ptr<ServiceRequest> tx);
+		void addTX(std::shared_ptr<ServiceProposal> tx);
+		
+		unsigned char* createMerkleTree();
 };
 
 

@@ -47,7 +47,8 @@ class Transaction{
 		unsigned int getVersion();
 		void setVersion(unsigned int version);
 
-		char* getHash();
+		char* getHexHash();
+		unsigned char* getHash();
 		void setHash(unsigned char* tx_hash);
 
 		unsigned char getSignatureSize();

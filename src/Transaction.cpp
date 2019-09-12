@@ -62,10 +62,14 @@ unsigned int Transaction::getVersion(){
 	return version;
 }
 
-char* Transaction::getHash(){
+char* Transaction::getHexHash(){
 	BIGNUM *tmp_hash_val = BN_new();
 	BN_bin2bn(const_cast<const unsigned char *>(tx_hash), 32, tmp_hash_val);
 	return BN_bn2hex(tmp_hash_val);
+}
+
+unsigned char* Transaction::getHash(){
+	return tx_hash;
 }
 
 void Transaction::setHash(unsigned char* tx_hash){
