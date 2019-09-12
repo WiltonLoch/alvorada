@@ -1,4 +1,7 @@
 #include <queue>
+#include <cstring>
+#include <bitset>
+#include <iostream>
 
 #include <openssl/sha.h>
 
@@ -56,14 +59,14 @@ unsigned char* Block::createMerkleTree(){
 	printf("in size: %d\n", hashQueue.size());
 	while(hashQueue.size() != 1){
 		printf("rn: %d\n", hashQueue.size());
-		memcpy(tmpHash, hashQueue.front(), 32);
-		/* if(removed_nodes >= in_order.size()) delete [] hashQueue.front(); */
+		/* memcpy(tmpHash, hashQueue.front(), 32); */
+		if(removed_nodes >= in_order.size()) delete [] hashQueue.front();
 		hashQueue.pop();
-		/* removed_nodes++; */
-		memcpy(tmpHash + 32, hashQueue.front(), 32);
-		/* if(removed_nodes >= in_order.size()) delete [] hashQueue.front(); */
+		removed_nodes++;
+		/* memcpy(tmpHash + 32, hashQueue.front(), 32); */
+		if(removed_nodes >= in_order.size()) delete [] hashQueue.front();
 		hashQueue.pop();
-		/* removed_nodes++; */
+		removed_nodes++;
 		unsigned char* resultingHash = new unsigned char[32];
 		SHA256(tmpHash, 64, resultingHash);
 		hashQueue.push(SHA256(resultingHash, 32, resultingHash));

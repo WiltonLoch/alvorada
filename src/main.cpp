@@ -23,7 +23,7 @@ int main(){
 	std::shared_ptr<Key> key (wallet->getKey());
 
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
-	std::shared_ptr<ServiceRequest> tx_req_b (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo2"));
+	std::shared_ptr<ServiceRequest> tx_req_b (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 
 	std::unique_ptr<Block> block (new Block());
 
@@ -35,18 +35,15 @@ int main(){
 	/* tx_req->setLockModel(2); */
 	block->addTX(tx_req);
 	block->addTX(tx_req_b);
-	block->addTX(tx_req);
-	block->addTX(tx_req_b);
-	block->addTX(tx_req);
 	block->createMerkleTree();
 
 	std::stringstream filename;
-	filename << "blockchain/" << tx_req->getHexHash();
+	filename << "blockchain/" << tx_req_b->getHexHash();
 
 	std::ofstream exit_stream(filename.str().c_str());
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);
-		out_archive << *tx_req;
+		out_archive << *tx_req_b;
 	}
 
 	std::ifstream in_stream(filename.str().c_str());
