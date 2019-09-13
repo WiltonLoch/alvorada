@@ -10,7 +10,7 @@ OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC = g++
 CPPFLAGS = $(foreach dir, $(INCLUDE_DIRS), -I$(dir)) 
-CCFLAGS = -Wall
+CCFLAGS = -Wall 
 LDFLAGS = 
 LDLIBS = -lssl -lcrypto -lboost_serialization
 

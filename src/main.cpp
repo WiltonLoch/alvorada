@@ -33,25 +33,36 @@ int main(){
 	hash::hashServiceRequest(tx_req);
 	hash::hashServiceRequest(tx_req_b);
 	/* tx_req->setLockModel(2); */
+
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
 	block->addTX(tx_req);
+	block->addTX(tx_req_b);
+	block->addTX(tx_req_b);
 	block->addTX(tx_req_b);
 	block->createMerkleTree();
 
 	std::stringstream filename;
 	filename << "blockchain/" << tx_req_b->getHexHash();
-
 	std::ofstream exit_stream(filename.str().c_str());
 	{
 		boost::archive::binary_oarchive out_archive(exit_stream);
 		out_archive << *tx_req_b;
 	}
 
+
 	std::ifstream in_stream(filename.str().c_str());
 	std::shared_ptr<ServiceRequest> tx_req2(new ServiceRequest());
 	{
 		boost::archive::binary_iarchive in_archive(in_stream);
 		in_archive >> *tx_req2;
-		printf("aaaa\n");
 	}
 
 	printf("ret %d\n", verification::verifyServiceRequest(tx_req2));
