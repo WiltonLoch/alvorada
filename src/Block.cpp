@@ -36,8 +36,6 @@ void Block::addTX(std::shared_ptr<ServiceProposal> tx){
 unsigned char* Block::createMerkleTree(){
 	std::queue<unsigned char*> hashQueue;
 	if(in_order.size() == 0) return nullptr;
-	bool already_padded = true;
-	if(in_order.size() < 2) already_padded = false;
 
 	for(int i = 0; i < in_order.size(); i++){
 		switch(in_order[i].first){
@@ -50,30 +48,33 @@ unsigned char* Block::createMerkleTree(){
 				/* printf("hash2: %s\n", serviceProposals[in_order[i].second]->getHexHash()); */	
 				break;
 		}	
-		if(i == in_order.size() - 1 and !already_padded){
-		       	i--;
-			already_padded = true;
-		}
 	}		
+
+	bool inner_nodes = false;
 	unsigned char * tmpHash = new unsigned char[64];
-	// if there is only one transaction than no delete is supposed to be done
-	unsigned int removed_nodes = (in_order.size() > 1 ? 0 : -1);
+
+	if(hashQueue.size() % 2 != 0) hashQueue.push(hashQueue.back());
+	unsigned int previous_level_size = hashQueue.size();
+
 	while(hashQueue.size() != 1){
+		if(hashQueue.size() == previous_level_size/2){
+		       	if(hashQueue.size() % 2 != 0) hashQueue.push(hashQueue.back());
+			if(!inner_nodes) inner_nodes = true;
+			previous_level_size = hashQueue.size();
+		}
 		memcpy(tmpHash, hashQueue.front(), 32);
-		if(removed_nodes >= in_order.size()) delete [] hashQueue.front();
+		/* if(inner_nodes) delete [] hashQueue.front(); */
 		hashQueue.pop();
-		removed_nodes++;
 		memcpy(tmpHash, hashQueue.front(), 32);
-		if(removed_nodes >= in_order.size()) delete [] hashQueue.front();
+		/* if(inner_nodes) delete [] hashQueue.front(); */
 		hashQueue.pop();
-		removed_nodes++;
 
 		unsigned char * resultingHash = new unsigned char[32];
 		SHA256(tmpHash, 64, resultingHash);
 		hashQueue.push(SHA256(resultingHash, 32, resultingHash));
 	}
+
 	return hashQueue.front();
 	
-}
-
-
+} 
+	
