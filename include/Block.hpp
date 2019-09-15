@@ -18,12 +18,14 @@ class Block{
 		std::vector<std::pair<int, int>> in_order;
 		std::vector<std::shared_ptr<ServiceRequest>> serviceRequests;
 		std::vector<std::shared_ptr<ServiceProposal>> serviceProposals;
+		unsigned int tx_amount;
 
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
 			ar & this->block_size;
 			if(header == nullptr) header = new BlockHeader();
-			ar & in_order.size();
+			ar & header;
+			ar & tx_amount;
 			ar & serviceRequests;
 			ar & serviceProposals;
 		}

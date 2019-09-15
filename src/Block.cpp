@@ -12,7 +12,10 @@
 #include <Block.hpp>
 #include <config.hpp>
 
-Block::Block(){}
+Block::Block(){
+	header = new header();
+}
+
 Block::~Block(){}
 
 unsigned int Block::getBlockSize(){
@@ -63,7 +66,7 @@ unsigned char* Block::createMerkleTree(){
 			previous_level_size = hashQueue.size();
 		}
 		memcpy(tmpHash, hashQueue.front(), 32);
-		/* if(inner_nodes) delete [] hashQueue.front(); */
+		if(inner_nodes) delete [] hashQueue.front();
 		hashQueue.pop();
 		memcpy(tmpHash, hashQueue.front(), 32);
 		/* if(inner_nodes) delete [] hashQueue.front(); */
@@ -77,4 +80,8 @@ unsigned char* Block::createMerkleTree(){
 	return hashQueue.front();
 	
 } 
+
+{
+	header->
+}
 	
