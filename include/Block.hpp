@@ -7,17 +7,14 @@
 
 #include <boost/serialization/vector.hpp>
 
-#include <ServiceRequest.hpp>
-#include <ServiceProposal.hpp>
+#include <Transactions.hpp>
 #include <BlockHeader.hpp>
 
 class Block{
 	private:
 		unsigned int block_size;
 		std::shared_ptr<BlockHeader> header;
-		std::vector<std::pair<int, int>> in_order;
-		std::vector<std::shared_ptr<ServiceRequest>> serviceRequests;
-		std::vector<std::shared_ptr<ServiceProposal>> serviceProposals;
+		std::vector<Transaction> transactions;
 		unsigned int tx_amount;
 
 		friend class boost::serialization::access;
