@@ -25,6 +25,7 @@ int main(){
 	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 	std::shared_ptr<ServiceRequest> tx_req_b (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
 
+
 	std::unique_ptr<Block> block (new Block());
 
 	signature::signTransaction(key, tx_req);
@@ -67,6 +68,7 @@ int main(){
 
 	printf("ret %d\n", verification::verifyServiceRequest(tx_req2));
 
+	/* printf("aaaa\n"); */
    /* for(int i = 0; i < data_size; i++){ */
 	    /* std::bitset<32> bitteste (teste[i]); */
 	    /* std::cout << bitteste.to_string() << std::endl; */

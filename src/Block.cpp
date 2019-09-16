@@ -13,7 +13,7 @@
 #include <config.hpp>
 
 Block::Block(){
-	header = new header();
+	header = std::make_shared<BlockHeader>();
 }
 
 Block::~Block(){}
@@ -80,8 +80,3 @@ unsigned char* Block::createMerkleTree(){
 	return hashQueue.front();
 	
 } 
-
-{
-	header->
-}
-	

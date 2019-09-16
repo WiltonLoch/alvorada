@@ -22,10 +22,26 @@ class Block{
 
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
+			unsigned int tx_amount = in_order.size();
 			ar & this->block_size;
-			if(header == nullptr) header = new BlockHeader();
+			if(header == nullptr) header = std::make_shared<BlockHeader>();
 			ar & header;
-			ar & tx_amount;
+			if(tx_amount == 0){
+				ar & tx_amount;
+				std::unique_ptr<Transaction> tmpTx (new Transaction());
+				ar & tmpTx;
+				switch(tmpTx->getTxType()){
+					case 0:
+						std::shared_ptr<ServiceRequest> tmpSR (tmpTx);
+						serviceRequests.push_back(tmpSR);
+						break;
+					case 1:
+						std::shared_ptr<ServiceProposal> tmpSP (tmpTx);
+						serviceProposals.push_back(tmpSR);
+						break;
+				}
+
+			}
 			ar & serviceRequests;
 			ar & serviceProposals;
 		}
@@ -33,7 +49,7 @@ class Block{
 		Block();
 		~Block();
 
-		void setBlockSize(unsigned int version);
+		void setBlockSize(unsigned int size);
 		unsigned int getBlockSize();
 
 		std::shared_ptr<BlockHeader> getBlockHeader();

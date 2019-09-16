@@ -7,9 +7,9 @@
 class BlockHeader{
 	private:
 		unsigned int version;
-		unsigned char* hash;
-		unsigned char* previous_block_hash;
-		unsigned char* merkle_root;
+		unsigned char* hash = nullptr;
+		unsigned char* previous_block_hash = nullptr;
+		unsigned char* merkle_root = nullptr;
 		bool remove_hash_serialization = false; 
 		friend class boost::serialization::access;
 
