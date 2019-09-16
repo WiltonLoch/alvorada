@@ -3,6 +3,7 @@
 #include <bitset>
 #include <iostream>
 #include <csignal>
+#include <memory>
 
 #include <openssl/sha.h>
 
@@ -13,7 +14,7 @@
 #include <config.hpp>
 
 Block::Block(){
-	header = new header();
+	header = std::make_shared<BlockHeader>(); 
 }
 
 Block::~Block(){}
@@ -32,7 +33,7 @@ void Block::addTX(std::shared_ptr<Transaction> tx){
 
 unsigned char* Block::createMerkleTree(){
 	std::queue<unsigned char*> hashQueue;
-	if(in_order.size() == 0) return nullptr;
+	if(transactions.size() == 0) return nullptr;
 
 	for(int i = 0; i < transactions.size(); i++){
 		hashQueue.push(transactions[i]->getHash());	

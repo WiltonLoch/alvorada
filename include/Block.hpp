@@ -7,24 +7,30 @@
 
 #include <boost/serialization/vector.hpp>
 
-#include <Transactions.hpp>
+#include <Transaction.hpp>
 #include <BlockHeader.hpp>
 
 class Block{
 	private:
 		unsigned int block_size;
 		std::shared_ptr<BlockHeader> header;
-		std::vector<Transaction> transactions;
-		unsigned int tx_amount;
+		std::vector<int> tx_type;
+		std::vector<std::shared_ptr<Transaction>> transactions;
 
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
 			ar & this->block_size;
 			if(header == nullptr) header = new BlockHeader();
 			ar & header;
-			ar & tx_amount;
-			ar & serviceRequests;
-			ar & serviceProposals;
+			if(transactions.size() == 0){
+				unsigned int tx_amount;
+				ar & tx_amount;
+				for(int i = 0; i < tx_amount; i++){
+				}
+			}
+			/* ar & tx_amount; */
+			/* ar & serviceRequests; */
+			/* ar & serviceProposals; */
 		}
 	public:
 		Block();
@@ -35,8 +41,7 @@ class Block{
 
 		std::shared_ptr<BlockHeader> getBlockHeader();
 
-		void addTX(std::shared_ptr<ServiceRequest> tx);
-		void addTX(std::shared_ptr<ServiceProposal> tx);
+		void addTX(std::shared_ptr<Transaction> tx);
 		
 		unsigned char* createMerkleTree();
 };

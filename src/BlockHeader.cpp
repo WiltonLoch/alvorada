@@ -1,11 +1,13 @@
 #include <openssl/bn.h>
 #include <BlockHeader.hpp>
 
+BlockHeader::BlockHeader(){}
+
 BlockHeader::BlockHeader(unsigned int version, unsigned char* previous_block_hash, unsigned char* merkle_root) : version(version), previous_block_hash(previous_block_hash), merkle_root(merkle_root){}
 
 BlockHeader::~BlockHeader(){
-	delete [] previous_block_hash;
-	delete [] merkle_root;
+	if(previous_block_hash != nullptr) delete [] previous_block_hash;
+	if(merkle_root != nullptr) delete [] merkle_root;
 }
 
 void BlockHeader::setVersion(unsigned int version){
