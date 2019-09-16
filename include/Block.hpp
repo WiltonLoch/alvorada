@@ -7,18 +7,15 @@
 
 #include <boost/serialization/vector.hpp>
 
-#include <ServiceRequest.hpp>
-#include <ServiceProposal.hpp>
+#include <Transaction.hpp>
 #include <BlockHeader.hpp>
 
 class Block{
 	private:
 		unsigned int block_size;
 		std::shared_ptr<BlockHeader> header;
-		std::vector<std::pair<int, int>> in_order;
-		std::vector<std::shared_ptr<ServiceRequest>> serviceRequests;
-		std::vector<std::shared_ptr<ServiceProposal>> serviceProposals;
-		unsigned int tx_amount;
+		std::vector<int> tx_type;
+		std::vector<std::shared_ptr<Transaction>> transactions;
 
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
@@ -26,24 +23,16 @@ class Block{
 			ar & this->block_size;
 			if(header == nullptr) header = std::make_shared<BlockHeader>();
 			ar & header;
-			if(tx_amount == 0){
-				ar & tx_amount;
-				std::unique_ptr<Transaction> tmpTx (new Transaction());
-				ar & tmpTx;
-				switch(tmpTx->getTxType()){
-					case 0:
-						std::shared_ptr<ServiceRequest> tmpSR (tmpTx);
-						serviceRequests.push_back(tmpSR);
-						break;
-					case 1:
-						std::shared_ptr<ServiceProposal> tmpSP (tmpTx);
-						serviceProposals.push_back(tmpSR);
-						break;
-				}
 
+			if(transactions.size() == 0){
+				unsigned int tx_amount;
+				ar & tx_amount;
+				for(int i = 0; i < tx_amount; i++){
+				}
 			}
-			ar & serviceRequests;
-			ar & serviceProposals;
+			/* ar & tx_amount; */
+			/* ar & serviceRequests; */
+			/* ar & serviceProposals; */
 		}
 	public:
 		Block();
@@ -54,8 +43,7 @@ class Block{
 
 		std::shared_ptr<BlockHeader> getBlockHeader();
 
-		void addTX(std::shared_ptr<ServiceRequest> tx);
-		void addTX(std::shared_ptr<ServiceProposal> tx);
+		void addTX(std::shared_ptr<Transaction> tx);
 		
 		unsigned char* createMerkleTree();
 };

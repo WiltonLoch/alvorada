@@ -6,7 +6,7 @@
 
 Transaction::Transaction(){}
 
-Transaction::Transaction(unsigned int version, char *address, unsigned char tx_type)  : version(version), address(address), tx_type(tx_type){}
+Transaction::Transaction(unsigned int version, char *address)  : version(version), address(address){}
 
 Transaction::~Transaction(){
 	delete[] tx_hash;
