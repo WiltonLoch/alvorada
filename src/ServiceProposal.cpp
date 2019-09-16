@@ -9,7 +9,7 @@
 
 ServiceProposal::ServiceProposal(){};
 
-ServiceProposal::ServiceProposal(unsigned int version, char *address, unsigned char lock_model, std::string filename) : Transaction(version, address, SERVICE_PROPOSAL){
+ServiceProposal::ServiceProposal(unsigned int version, char *address) : Transaction(version, address, SERVICE_PROPOSAL){
 }
 
 ServiceProposal::~ServiceProposal(){

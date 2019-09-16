@@ -8,6 +8,7 @@ BlockHeader::BlockHeader(unsigned int version, unsigned char* previous_block_has
 BlockHeader::~BlockHeader(){
 	if(previous_block_hash != nullptr) delete [] previous_block_hash;
 	if(merkle_root != nullptr) delete [] merkle_root;
+	if(hash != nullptr) delete [] hash;
 }
 
 void BlockHeader::setVersion(unsigned int version){

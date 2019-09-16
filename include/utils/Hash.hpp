@@ -15,7 +15,7 @@
 
 namespace hash{
 
-	template<class T> void hashServiceRequest(std::shared_ptr<T> tx){
+	template<class T> void hashTransaction(std::shared_ptr<T> tx){
 		tx->removeHashSerialization();
 
 		std::stringstream serialized_string;

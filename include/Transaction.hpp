@@ -21,6 +21,7 @@ class Transaction{
 				if(signature == nullptr) signature = new unsigned char[signature_size];
 				for(unsigned int i = 0; i < signature_size; i++)ar & signature[i];
 			}
+			ar & tx_type;
 		}
 	protected:
 		unsigned int version;
@@ -28,6 +29,7 @@ class Transaction{
 		char *address;
 		unsigned char signature_size;
 		unsigned char *signature;
+		unsigned char tx_type;
 		bool remove_signature_serialization = false;
 		bool remove_hash_serialization = false;
     	public:
@@ -57,6 +59,9 @@ class Transaction{
 
 		unsigned char* getSignature();
 		void setSignature(unsigned char *signature);
+
+		unsigned char getTxType();
+		void setTxType(unsigned char tx_type);
         
 };
 

@@ -27,8 +27,9 @@ std::shared_ptr<BlockHeader> Block::getBlockHeader(){
 	return header;
 }
 
-void Block::addTX(std::shared_ptr<Transaction> tx){
+void Block::addTx(std::shared_ptr<Transaction> tx){
 	transactions.push_back(tx);
+	tx_types.push_back(tx->getTxType());
 }
 
 unsigned char* Block::createMerkleTree(){
@@ -66,3 +67,25 @@ unsigned char* Block::createMerkleTree(){
 	return hashQueue.front();
 	
 } 
+
+char* Block::getHexHash(){
+	return header->getHexHash();
+}
+
+unsigned char* Block::getHash(){
+	return header->getHash();
+}
+
+void Block::setHash(unsigned char* hash){
+	header->setHash(hash);
+}
+
+void Block::removeHashSerialization(){
+	header->removeHashSerialization();
+}
+
+void Block::addHashSerialization(){
+	header->addHashSerialization();
+}
+
+

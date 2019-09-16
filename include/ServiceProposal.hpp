@@ -27,7 +27,7 @@ class ServiceProposal : public Transaction{
 
     	public:
 		ServiceProposal();
-		ServiceProposal(unsigned int version, char *address, unsigned char lock_model, std::string filename);
+		ServiceProposal(unsigned int version, char *address);
 		~ServiceProposal();
 		/* ServiceProposal(unsigned char* raw_tx); */
 };
