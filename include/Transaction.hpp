@@ -9,12 +9,15 @@ class Transaction{
 	private:
 		friend class boost::serialization::access;
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
-			ar & this->version;
+			ar & tx_version;
 			if(!remove_hash_serialization){
 				if(tx_hash == nullptr) tx_hash = new unsigned char[32];
 				for(int i = 0; i < 32; i++) ar & tx_hash[i];
 			}
-			if(address == nullptr) address = new char[66];
+			if(address == nullptr){
+				self_allocated_address = true;
+			       	address = new char[66];
+			}
 			for(int i = 0; i < 66; i++) ar & address[i];
 			if(!remove_signature_serialization){
 				ar & signature_size;
@@ -24,17 +27,19 @@ class Transaction{
 			ar & tx_type;
 		}
 	protected:
-		unsigned int version;
-		unsigned char *tx_hash;
-		char *address;
+		unsigned int tx_version;
+		unsigned char *tx_hash = nullptr;
+		char *address = nullptr;
 		unsigned char signature_size;
-		unsigned char *signature;
+		unsigned char *signature = nullptr;
 		unsigned char tx_type;
 		bool remove_signature_serialization = false;
 		bool remove_hash_serialization = false;
+
+		bool self_allocated_address = false;
     	public:
 		Transaction();
-		Transaction(unsigned int version, char *address, unsigned char tx_type);
+		Transaction(unsigned int tx_version, char *address, unsigned char tx_type);
 		/* Transaction(unsigned char* raw_data); */
 		virtual ~Transaction();
 

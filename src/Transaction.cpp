@@ -6,12 +6,12 @@
 
 Transaction::Transaction(){}
 
-Transaction::Transaction(unsigned int version, char *address, unsigned char tx_type)  : version(version), address(address), tx_type(tx_type){}
+Transaction::Transaction(unsigned int tx_version, char *address, unsigned char tx_type)  : tx_version(tx_version), address(address), tx_type(tx_type){}
 
 Transaction::~Transaction(){
-	delete[] tx_hash;
-	delete[] address;
-	delete[] signature;
+	if(tx_hash != nullptr) delete [] tx_hash;
+	if(address != nullptr and self_allocated_address) delete [] address;
+	if(signature != nullptr) delete [] signature;
 }
 
 void Transaction::removeSignatureSerialization(){
@@ -54,12 +54,12 @@ char* Transaction::getAddress(){
 	return address;
 }
 
-void Transaction::setVersion(unsigned int version){
-	this->version = version;
+void Transaction::setVersion(unsigned int tx_version){
+	this->tx_version = tx_version;
 }
 
 unsigned int Transaction::getVersion(){
-	return version;
+	return tx_version;
 }
 
 char* Transaction::getHexHash(){

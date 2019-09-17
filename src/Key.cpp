@@ -36,7 +36,7 @@ Key::~Key(){
 	EC_KEY_free(key_pair);
 	CRYPTO_cleanup_all_ex_data();
 	EVP_cleanup();
-	free(address);
+	if(address != NULL) free(address);
 }
 
 void Key::setKeyIndex(unsigned int key_index){

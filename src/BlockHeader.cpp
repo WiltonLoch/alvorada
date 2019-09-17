@@ -3,7 +3,7 @@
 
 BlockHeader::BlockHeader(){}
 
-BlockHeader::BlockHeader(unsigned int version, unsigned char* previous_block_hash, unsigned char* merkle_root) : version(version), previous_block_hash(previous_block_hash), merkle_root(merkle_root){}
+BlockHeader::BlockHeader(unsigned int tx_version, unsigned char* previous_block_hash, unsigned char* merkle_root) : block_version(block_version), previous_block_hash(previous_block_hash), merkle_root(merkle_root){}
 
 BlockHeader::~BlockHeader(){
 	if(previous_block_hash != nullptr) delete [] previous_block_hash;
@@ -11,12 +11,12 @@ BlockHeader::~BlockHeader(){
 	if(hash != nullptr) delete [] hash;
 }
 
-void BlockHeader::setVersion(unsigned int version){
-	this->version = version;
+void BlockHeader::setVersion(unsigned int block_version){
+	this->block_version = block_version;
 }
 
 unsigned int BlockHeader::getVersion(){
-	return version;
+	return block_version;
 }
 
 void BlockHeader::setPreviousBlockHash(unsigned char* previous_block_hash){

@@ -12,7 +12,7 @@ CC = g++
 CPPFLAGS = $(foreach dir, $(INCLUDE_DIRS), -I$(dir)) 
 CCFLAGS = -Wall 
 LDFLAGS = 
-LDLIBS = -lssl -lcrypto -lboost_serialization
+LDLIBS = -lssl -lcrypto -lboost_serialization -lboost_system -lboost_filesystem
 
 
 .PHONY: all clean

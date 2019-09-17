@@ -10,7 +10,9 @@ class ServiceRequest : public Transaction{
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
 			ar & boost::serialization::base_object<Transaction>(*this);
 			ar & lock_model;
+			/* printf("lock_model: %d\n", lock_model); */
 			ar & data_size;
+			/* printf("data_size: %d\n", data_size); */
 			if(data == nullptr) data = new unsigned char[data_size];
 			for(unsigned int i = 0; i < data_size; i++)ar & data[i];
 		}

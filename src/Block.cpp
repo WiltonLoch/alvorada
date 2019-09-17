@@ -3,9 +3,11 @@
 #include <bitset>
 #include <iostream>
 #include <csignal>
+#include <sstream>
 #include <memory>
 
 #include <openssl/sha.h>
+#include <boost/filesystem.hpp>
 
 #include <ServiceRequest.hpp>
 #include <ServiceProposal.hpp>
@@ -88,4 +90,37 @@ void Block::addHashSerialization(){
 	header->addHashSerialization();
 }
 
+bool Block::store(){
+	std::stringstream dir_path; 
+	dir_path << "blockchain/" << this->getHexHash();
+	boost::filesystem::path block_dir(dir_path.str().c_str());	
+	if(!boost::filesystem::create_directory(block_dir)) printf("Error creating block directory!\n");
+	dir_path << "/";
 
+	std::stringstream file_path;
+	file_path << dir_path.str() << "header";
+	std::ofstream exit_stream(file_path.str().c_str());
+	{
+		boost::archive::binary_oarchive out_archive(exit_stream);
+		out_archive << *header;
+	}
+
+	for(int i = 0; i < transactions.size(); i++){
+		file_path.str("");
+		file_path << dir_path.str() << transactions[i]->getHexHash();
+		printf("path: %s\n", transactions[i]->getHexHash());
+		std::ofstream exit_stream(file_path.str().c_str());
+		{
+			boost::archive::binary_oarchive out_archive(exit_stream);
+			switch(tx_types[i]){
+				case SERVICE_REQUEST:
+					out_archive << *std::dynamic_pointer_cast<ServiceRequest>(transactions[i]);
+					break;
+				case SERVICE_PROPOSAL:
+					out_archive << *std::dynamic_pointer_cast<ServiceProposal>(transactions[i]);
+					break;
+			}	
+		}
+	}
+	return true;
+}

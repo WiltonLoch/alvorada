@@ -3,8 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
@@ -22,51 +20,36 @@ int main(){
 	std::unique_ptr<Wallet> wallet (new Wallet());
 	std::shared_ptr<Key> key (wallet->getKey());
 
-	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
-	std::shared_ptr<ServiceProposal> tx_req_b (new ServiceProposal(1, key->getAddress()));
-
+	std::shared_ptr<ServiceRequest> tx_req (new ServiceRequest(1, key->getAddress(), 0, "teste_grafo"));
+	std::shared_ptr<ServiceRequest> tx_req1 (new ServiceRequest(1, key->getAddress(), 1, "teste_grafo"));
+	/* std::shared_ptr<ServiceProposal> tx_req_b (new ServiceProposal(1, key->getAddress())); */
 
 	std::shared_ptr<Block> block (new Block());
 
 	signature::signTransaction(key, tx_req);
-	signature::signTransaction(key, tx_req_b);
-
+	signature::signTransaction(key, tx_req1);
 	hash::hashTransaction(tx_req);
-	hash::hashTransaction(tx_req_b);
-	/* tx_req->setLockModel(2); */
-
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
+	hash::hashTransaction(tx_req1);
 	block->addTx(tx_req);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
-	block->addTx(tx_req_b);
+	block->addTx(tx_req1);
+
 	block->createMerkleTree();
 
 	hash::hashTransaction(block);
-
-	std::stringstream filename;
-	filename << "blockchain/" << block->getHexHash();
+	block->store();
+	/* /1* printf("tx_req_hash: %s\n", tx_req->getHexHash()); *1/ */
+	/* std::stringstream filename; */
+	/* /1* printf("ext_hash: %s\n", block->getHexHash()); *1/ */
 	/* std::ofstream exit_stream(filename.str().c_str()); */
 	/* { */
 	/* 	boost::archive::binary_oarchive out_archive(exit_stream); */
 	/* 	out_archive << *block; */
 	/* } */
-	/* printf("aaaa\n"); */
-
 
 	/* std::ifstream in_stream(filename.str().c_str()); */
-	/* std::shared_ptr<ServiceRequest> tx_req2(new ServiceRequest()); */
 	/* { */
 	/* 	boost::archive::binary_iarchive in_archive(in_stream); */
-	/* 	in_archive >> *tx_req2; */
+	/* 	in_archive >> *block2; */
 	/* } */
 
 	/* printf("ret %d\n", verification::verifyServiceRequest(tx_req2)); */
