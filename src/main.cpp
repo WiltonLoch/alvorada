@@ -26,16 +26,16 @@ int main(){
 
 	std::shared_ptr<Block> block (new Block());
 
-	signature::signTransaction(key, tx_req);
-	signature::signTransaction(key, tx_req1);
-	hash::hashTransaction(tx_req);
-	hash::hashTransaction(tx_req1);
+	signature::sign(key, tx_req);
+	signature::sign(key, tx_req1);
+	hash::hash(tx_req);
+	hash::hash(tx_req1);
 	block->addTx(tx_req);
 	block->addTx(tx_req1);
 
 	block->createMerkleTree();
 
-	hash::hashTransaction(block);
+	hash::hash(block);
 	block->store();
 	/* /1* printf("tx_req_hash: %s\n", tx_req->getHexHash()); *1/ */
 	/* std::stringstream filename; */

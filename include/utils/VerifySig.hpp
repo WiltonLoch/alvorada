@@ -14,21 +14,21 @@
 
 namespace signature{
 
-	template<class T> bool verifyTransactionSig(std::shared_ptr<Key> key, std::shared_ptr<T> tx){
-		tx->removeHashSerialization();
-		tx->removeSignatureSerialization();
+	template<class T> bool verifySig(std::shared_ptr<Key> key, std::shared_ptr<T> obj){
+		obj->removeHashSerialization();
+		obj->removeSignatureSerialization();
 
 		std::stringstream serialized_string;
 		{
 			boost::archive::binary_oarchive out_archive(serialized_string);
 
-			out_archive << *tx;
+			out_archive << *obj;
 		}
 
-		tx->addSignatureSerialization();
-		tx->addHashSerialization();
+		obj->addSignatureSerialization();
+		obj->addHashSerialization();
 
-		return key->verify(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), tx->getSignature(), static_cast<unsigned int>(tx->getSignatureSize()));
+		return key->verify(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), obj->getSignature(), static_cast<unsigned int>(obj->getSignatureSize()));
 	}
 }
 

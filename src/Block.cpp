@@ -108,7 +108,6 @@ bool Block::store(){
 	for(int i = 0; i < transactions.size(); i++){
 		file_path.str("");
 		file_path << dir_path.str() << transactions[i]->getHexHash();
-		printf("path: %s\n", transactions[i]->getHexHash());
 		std::ofstream exit_stream(file_path.str().c_str());
 		{
 			boost::archive::binary_oarchive out_archive(exit_stream);

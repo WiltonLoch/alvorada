@@ -16,22 +16,22 @@
 
 namespace signature{
 
-	template<class T>void signTransaction(std::shared_ptr<Key> key, std::shared_ptr<T> tx){
-		tx->removeHashSerialization();
-		tx->removeSignatureSerialization();
+	template<class T>void sign(std::shared_ptr<Key> key, std::shared_ptr<T> obj){
+		obj->removeHashSerialization();
+		obj->removeSignatureSerialization();
 
 		std::stringstream serialized_string;	
 		{
 			boost::archive::binary_oarchive out_archive(serialized_string);
 
-			out_archive << *tx;
+			out_archive << *obj;
 		}
 		unsigned char size;
-		tx->setSignature(key->sign(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), size));
-		tx->setSignatureSize(size);
+		obj->setSignature(key->sign(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), size));
+		obj->setSignatureSize(size);
 
-		tx->addSignatureSerialization();
-		tx->addHashSerialization();
+		obj->addSignatureSerialization();
+		obj->addHashSerialization();
 	}
 
 };
