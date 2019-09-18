@@ -1,11 +1,9 @@
-#ifndef COMMOM_VERIFICATOR_H
-#define COMMON_VERIFICATOR_H
-
 #include <config.hpp>
 
 #include <Key.hpp>
 #include <ServiceProposal.hpp>
 #include <VerifySig.hpp>
+#include <ServiceProposalVerificator.hpp>
 
 namespace verification{
 	
@@ -19,7 +17,4 @@ namespace verification{
 		return true;
 	}
 
-}
-
-
-#endif
+};

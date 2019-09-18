@@ -80,6 +80,9 @@ class Block{
 		void removeHashSerialization();
 		void addHashSerialization();
 
+		unsigned int getVersion();
+		void setVersion(unsigned int version);
+
 		char* getHexHash();
 		unsigned char* getHash();
 		void setHash(unsigned char* tx_hash);
@@ -87,9 +90,12 @@ class Block{
 		std::shared_ptr<BlockHeader> getBlockHeader();
 
 		void addTx(std::shared_ptr<Transaction> tx);
+
 		bool store();
+		bool verifyTransactions();
 		
 		unsigned char* createMerkleTree();
+
 };
 
 

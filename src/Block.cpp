@@ -15,8 +15,11 @@
 #include <Block.hpp>
 #include <config.hpp>
 
+#include <ServiceRequestVerificator.hpp>
+#include <ServiceProposalVerificator.hpp>
+
 Block::Block(){
-	header = std::make_shared<BlockHeader>(); 
+	header = std::make_shared<BlockHeader>(1); 
 }
 
 Block::~Block(){}
@@ -33,6 +36,15 @@ void Block::addTx(std::shared_ptr<Transaction> tx){
 	transactions.push_back(tx);
 	tx_types.push_back(tx->getTxType());
 }
+
+void Block::setVersion(unsigned int block_version){
+	header->setVersion(block_version);
+}
+
+unsigned int Block::getVersion(){
+	return header->getVersion();
+}
+
 
 unsigned char* Block::createMerkleTree(){
 	std::queue<unsigned char*> hashQueue;
@@ -120,6 +132,20 @@ bool Block::store(){
 					break;
 			}	
 		}
+	}
+	return true;
+}
+
+bool Block::verifyTransactions(){
+	for(int i = 0; i < transactions.size(); i++){
+		switch(tx_types[i]){
+			case SERVICE_REQUEST:
+				if(!verification::verifyServiceRequest(std::dynamic_pointer_cast<ServiceRequest>(transactions[i]))) return false;
+				break;
+			case SERVICE_PROPOSAL:
+				if(!verification::verifyServiceProposal(std::dynamic_pointer_cast<ServiceProposal>(transactions[i]))) return false;
+				break;
+		}	
 	}
 	return true;
 }

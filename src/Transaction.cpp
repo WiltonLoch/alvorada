@@ -6,7 +6,7 @@
 
 Transaction::Transaction(){}
 
-Transaction::Transaction(unsigned int tx_version, char *address, unsigned char tx_type)  : tx_version(tx_version), address(address), tx_type(tx_type){}
+Transaction::Transaction(unsigned int version, char *address, unsigned char tx_type)  : version(version), address(address), tx_type(tx_type){}
 
 Transaction::~Transaction(){
 	if(tx_hash != nullptr) delete [] tx_hash;
@@ -54,12 +54,12 @@ char* Transaction::getAddress(){
 	return address;
 }
 
-void Transaction::setVersion(unsigned int tx_version){
-	this->tx_version = tx_version;
+void Transaction::setVersion(unsigned int version){
+	this->version = version;
 }
 
 unsigned int Transaction::getVersion(){
-	return tx_version;
+	return version;
 }
 
 char* Transaction::getHexHash(){
@@ -73,6 +73,7 @@ unsigned char* Transaction::getHash(){
 }
 
 void Transaction::setHash(unsigned char* tx_hash){
+	if(this->tx_hash != nullptr) delete [] this->tx_hash;
 	this->tx_hash = tx_hash;
 }
 unsigned char Transaction::getTxType(){

@@ -1,5 +1,5 @@
-#ifndef UTILS_VERIFY_SIG_H 
-#define UTILS_VERIFY_SIG_H
+#ifndef UTILS_HASH_H 
+#define UTILS_HASH_H
 
 #include <fstream>
 #include <iostream>
@@ -17,7 +17,6 @@ namespace hash{
 
 	template<class T> void hash(std::shared_ptr<T> obj){
 		obj->removeHashSerialization();
-
 		std::stringstream serialized_string;
 		{
 			boost::archive::binary_oarchive out_archive(serialized_string);
@@ -26,11 +25,12 @@ namespace hash{
 		unsigned char* hash = new unsigned char[32];
 		SHA256(reinterpret_cast<const unsigned char*>(serialized_string.str().c_str()), serialized_string.str().length(), hash);
 		obj->setHash(hash);
+		printf("hash_i: %s\n", obj->getHexHash());
 
 		obj->addHashSerialization();
 
 	}
 
-}
+};
 
 #endif

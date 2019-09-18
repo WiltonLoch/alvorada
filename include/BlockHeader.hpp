@@ -6,7 +6,7 @@
 
 class BlockHeader{
 	private:
-		unsigned int block_version;
+		unsigned int version;
 		unsigned char* hash = nullptr;
 		unsigned char* previous_block_hash = nullptr;
 		unsigned char* merkle_root = nullptr;
@@ -14,7 +14,8 @@ class BlockHeader{
 		friend class boost::serialization::access;
 
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
-			ar & block_version;
+			ar & this->version;
+			printf("v: %d\n", this->version);
 			if(!remove_hash_serialization){
 				if(hash == nullptr) hash = new unsigned char[32];
 				for(int i = 0; i < 32; i++) ar & hash[i];
@@ -27,6 +28,7 @@ class BlockHeader{
 		}
 	public:
 		BlockHeader();
+		BlockHeader(unsigned int version);
 		BlockHeader(unsigned int version, unsigned char* previous_block_hash, unsigned char* merkle_root);
 		~BlockHeader();
 

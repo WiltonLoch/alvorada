@@ -1,7 +1,7 @@
-#ifndef COMMOM_VERIFICATOR_H
-#define COMMON_VERIFICATOR_H
+#ifndef SERVICE_REQUEST_VERIFICATOR_H
+#define SERVICE_REQUEST_VERIFICATOR_H
 
-#include<Transaction.hpp>
+#include<ServiceRequest.hpp>
 
 namespace verification{
 	

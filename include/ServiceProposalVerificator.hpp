@@ -1,13 +1,13 @@
-#ifndef COMMOM_VERIFICATOR_H
-#define COMMON_VERIFICATOR_H
+#ifndef SERVICE_PROPOSAL_VERIFICATOR_H
+#define SERVICE_PROPOSAL_VERIFICATOR_H
 
-#include<Transaction.hpp>
+#include<ServiceProposal.hpp>
 
 namespace verification{
 	
 	bool verifyServiceProposal(std::shared_ptr<ServiceProposal> tx);
 
-}
+};
 
 
 #endif

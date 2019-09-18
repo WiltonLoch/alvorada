@@ -30,6 +30,6 @@ namespace signature{
 
 		return key->verify(reinterpret_cast<unsigned char*>(const_cast<char *>(serialized_string.str().c_str())), serialized_string.str().length(), obj->getSignature(), static_cast<unsigned int>(obj->getSignatureSize()));
 	}
-}
+};
 
 #endif
