@@ -5,6 +5,7 @@
 #include <csignal>
 #include <sstream>
 #include <memory>
+#include <unistd.h>
 
 #include <openssl/sha.h>
 #include <boost/filesystem.hpp>
@@ -117,18 +118,27 @@ bool Block::store(){
 		out_archive << *header;
 	}
 
+	std::stringstream symbolic_link, absolute_path;
 	for(int i = 0; i < transactions.size(); i++){
 		file_path.str("");
+		symbolic_link.str("");
+		absolute_path.str("");
+
 		file_path << dir_path.str() << transactions[i]->getHexHash();
+		symbolic_link << "utx/" << transactions[i]->getHexHash();
+		absolute_path << boost::filesystem::current_path().native() << "/" << file_path.str();
+
 		std::ofstream exit_stream(file_path.str().c_str());
 		{
 			boost::archive::binary_oarchive out_archive(exit_stream);
 			switch(tx_types[i]){
 				case SERVICE_REQUEST:
 					out_archive << *std::dynamic_pointer_cast<ServiceRequest>(transactions[i]);
+					if(symlink(absolute_path.str().c_str(), symbolic_link.str().c_str()) != 0) printf("Symlink creation failed!\n");
 					break;
 				case SERVICE_PROPOSAL:
 					out_archive << *std::dynamic_pointer_cast<ServiceProposal>(transactions[i]);
+					if(symlink(absolute_path.str().c_str(), symbolic_link.str().c_str()) != 0) printf("Symlink creation failed!\n");
 					break;
 			}	
 		}
@@ -141,6 +151,7 @@ bool Block::verifyTransactions(){
 		switch(tx_types[i]){
 			case SERVICE_REQUEST:
 				if(!verification::verifyServiceRequest(std::dynamic_pointer_cast<ServiceRequest>(transactions[i]))) return false;
+
 				break;
 			case SERVICE_PROPOSAL:
 				if(!verification::verifyServiceProposal(std::dynamic_pointer_cast<ServiceProposal>(transactions[i]))) return false;

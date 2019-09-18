@@ -23,7 +23,6 @@ namespace verification{
 		delete [] original_hash;
 
 		if(block->getVersion() != VERSION) return false;
-		printf("aaaa\n");
 		/* if(!signature::verifySig(key, block)) return false; */
 		if(!block->verifyTransactions()) return false;
 

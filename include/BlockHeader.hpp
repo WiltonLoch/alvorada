@@ -15,7 +15,6 @@ class BlockHeader{
 
 		template <class Archive> void serialize(Archive & ar, unsigned int version){
 			ar & this->version;
-			printf("v: %d\n", this->version);
 			if(!remove_hash_serialization){
 				if(hash == nullptr) hash = new unsigned char[32];
 				for(int i = 0; i < 32; i++) ar & hash[i];

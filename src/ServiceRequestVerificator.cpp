@@ -14,9 +14,7 @@ namespace verification{
 		hash::hash(tx);
 		current_hash = tx->getHash();
 
-		for(int i = 0; i < 32; i++){
-			if(original_hash[i] != current_hash[i]) return false;
-		}
+		for(int i = 0; i < 32; i++) if(original_hash[i] != current_hash[i]) return false;
 
 		delete [] original_hash;
 

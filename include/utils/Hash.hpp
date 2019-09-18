@@ -25,7 +25,6 @@ namespace hash{
 		unsigned char* hash = new unsigned char[32];
 		SHA256(reinterpret_cast<const unsigned char*>(serialized_string.str().c_str()), serialized_string.str().length(), hash);
 		obj->setHash(hash);
-		printf("hash_i: %s\n", obj->getHexHash());
 
 		obj->addHashSerialization();
 
